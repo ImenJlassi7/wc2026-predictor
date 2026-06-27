@@ -15,6 +15,19 @@ import plotly.express as px
 from pathlib import Path
 from collections import defaultdict
 
+# ─── FLAG IMAGES ──────────────────────────────────────────────────────────────
+# Using flagcdn.com — reliable SVG flags by ISO 3166-1 alpha-2 code
+FLAG_URLS = {
+    "Croatia": "https://flagcdn.com/hr.svg",
+    "Ghana":   "https://flagcdn.com/gh.svg",
+}
+
+def flag_img(team: str, height: int = 28) -> str:
+    url = FLAG_URLS.get(team, "")
+    if not url:
+        return ""
+    return f'<img src="{url}" height="{height}" style="vertical-align:middle;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.4);">'
+
 # ─── PAGE CONFIG ──────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="WC 2026 Score Predictor",
@@ -224,7 +237,10 @@ with st.sidebar:
     st.markdown("---")
 
     st.markdown("### Match")
-    st.markdown("**🇭🇷 Croatia  vs  🇬🇭 Ghana**")
+    st.markdown(
+        f'{flag_img("Croatia", 22)} **Croatia** &nbsp; vs &nbsp; {flag_img("Ghana", 22)} **Ghana**',
+        unsafe_allow_html=True
+    )
     st.caption("🌍 Neutral venue · WC 2026 · Group L")
 
     st.markdown("---")
@@ -285,7 +301,14 @@ h2h_entry = h2h_all.get(h2h_key, {"hw":0,"dr":0,"aw":0,"n":0})
 
 # ─── HEADER ───────────────────────────────────────────────────────────────────
 
-st.markdown(f"# ⚽ {home_team} vs {away_team}")
+st.markdown(
+    f'<h1 style="display:flex;align-items:center;gap:14px;margin-bottom:4px;">'
+    f'{flag_img(home_team, 40)} {home_team} '
+    f'<span style="color:#555;font-weight:400;">vs</span> '
+    f'{flag_img(away_team, 40)} {away_team}'
+    f'</h1>',
+    unsafe_allow_html=True
+)
 st.markdown(f"**FIFA World Cup 2026** · Poisson + XGBoost Ensemble")
 st.markdown("---")
 
@@ -309,7 +332,7 @@ with col_score:
     <div class="score-box">
         <div style="font-size:0.85rem;color:#90caf9;margin-bottom:12px">PREDICTED SCORE</div>
         <div class="score-num">{best[0]} – {best[1]}</div>
-        <div class="score-label">{home_team} &nbsp;·&nbsp; {away_team}</div>
+        <div class="score-label">{flag_img(home_team, 20)} {home_team} &nbsp;·&nbsp; {flag_img(away_team, 20)} {away_team}</div>
         <div style="margin-top:12px;font-size:0.8rem;color:#64b5f6">
             Probability: {mat[best]*100:.2f}%
         </div>
@@ -413,7 +436,7 @@ col_h, col_a = st.columns(2)
 
 def render_team_card(col, team, s):
     with col:
-        st.markdown(f"**{team}**")
+        st.markdown(f'{flag_img(team, 24)} **{team}**', unsafe_allow_html=True)
         r1,r2,r3 = st.columns(3)
         r1.metric("Elo", f"{s['elo']:.0f}")
         r2.metric("WC Matches", s["n"])
