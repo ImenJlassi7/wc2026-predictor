@@ -1,0 +1,198 @@
+date,season,competition,home_team,away_team,home_goals,away_goals
+2014-06-12,2014,World Cup,Brazil v Croatia,,3,1
+2014-06-13,2014,World Cup,Mexico v Cameroon,,1,0
+2014-06-17,2014,World Cup,Brazil v Mexico,,0,0
+2014-06-18,2014,World Cup,Cameroon v Croatia,,0,4
+2014-06-23,2014,World Cup,Cameroon v Brazil,,1,4
+2014-06-23,2014,World Cup,Croatia v Mexico,,1,3
+2014-06-13,2014,World Cup,Spain v Netherlands,,1,5
+2014-06-13,2014,World Cup,Chile v Australia,,3,1
+2014-06-18,2014,World Cup,Australia v Netherlands,,2,3
+2014-06-18,2014,World Cup,Spain v Chile,,0,2
+2014-06-23,2014,World Cup,Australia v Spain,,0,3
+2014-06-23,2014,World Cup,Netherlands v Chile,,2,0
+2014-06-14,2014,World Cup,Colombia v Greece,,3,0
+2014-06-19,2014,World Cup,Japan v Greece,,0,0
+2014-06-24,2014,World Cup,Japan v Colombia,,1,4
+2014-06-14,2014,World Cup,Uruguay,Costa Rica,1,3
+2014-06-14,2014,World Cup,England,Italy,1,2
+2014-06-19,2014,World Cup,Uruguay,England,2,1
+2014-06-20,2014,World Cup,Italy,Costa Rica,0,1
+2014-06-24,2014,World Cup,Italy,Uruguay,0,1
+2014-06-24,2014,World Cup,Costa Rica,England,0,0
+2014-06-15,2014,World Cup,Switzerland,Ecuador,2,1
+2014-06-15,2014,World Cup,France,Honduras,3,0
+2014-06-20,2014,World Cup,Switzerland,France,2,5
+2014-06-20,2014,World Cup,Honduras,Ecuador,1,2
+2014-06-25,2014,World Cup,Honduras,Switzerland,0,3
+2014-06-25,2014,World Cup,Ecuador,France,0,0
+2014-06-15,2014,World Cup,Argentina,Bosnia-Herzegovina,2,1
+2014-06-16,2014,World Cup,Iran,Nigeria,0,0
+2014-06-21,2014,World Cup,Argentina,Iran,1,0
+2014-06-21,2014,World Cup,Nigeria,Bosnia-Herzegovina,1,0
+2014-06-25,2014,World Cup,Nigeria,Argentina,2,3
+2014-06-25,2014,World Cup,Bosnia-Herzegovina,Iran,3,1
+2014-06-16,2014,World Cup,Germany,Portugal,4,0
+2014-06-16,2014,World Cup,Ghana,USA,1,2
+2014-06-21,2014,World Cup,Germany,Ghana,2,2
+2014-06-22,2014,World Cup,USA,Portugal,2,2
+2014-06-26,2014,World Cup,USA,Germany,0,1
+2014-06-26,2014,World Cup,Portugal,Ghana,2,1
+2014-06-17,2014,World Cup,Belgium,Algeria,2,1
+2014-06-17,2014,World Cup,Russia,South Korea,1,1
+2014-06-22,2014,World Cup,Belgium,Russia,1,0
+2014-06-22,2014,World Cup,South Korea,Algeria,2,4
+2014-06-26,2014,World Cup,South Korea,Belgium,0,1
+2014-06-26,2014,World Cup,Algeria,Russia,1,1
+2018-06-14,2018,World Cup,Russia,Saudi Arabia,5,0
+2018-06-15,2018,World Cup,Egypt,Uruguay,0,1
+2018-06-19,2018,World Cup,Russia,Egypt,3,1
+2018-06-20,2018,World Cup,Uruguay,Saudi Arabia,1,0
+2018-06-25,2018,World Cup,Uruguay,Russia,3,0
+2018-06-25,2018,World Cup,Saudi Arabia,Egypt,2,1
+2018-06-15,2018,World Cup,Morocco,Iran,0,1
+2018-06-15,2018,World Cup,Portugal,Spain,3,3
+2018-06-20,2018,World Cup,Portugal,Morocco,1,0
+2018-06-20,2018,World Cup,Iran,Spain,0,1
+2018-06-25,2018,World Cup,Iran,Portugal,1,1
+2018-06-25,2018,World Cup,Spain,Morocco,2,2
+2018-06-16,2018,World Cup,France,Australia,2,1
+2018-06-16,2018,World Cup,Peru,Denmark,0,1
+2018-06-21,2018,World Cup,Denmark,Australia,1,1
+2018-06-21,2018,World Cup,France,Peru,1,0
+2018-06-26,2018,World Cup,Denmark,France,0,0
+2018-06-26,2018,World Cup,Australia,Peru,0,2
+2018-06-16,2018,World Cup,Argentina,Iceland,1,1
+2018-06-16,2018,World Cup,Croatia,Nigeria,2,0
+2018-06-21,2018,World Cup,Argentina,Croatia,0,3
+2018-06-22,2018,World Cup,Nigeria,Iceland,2,0
+2018-06-26,2018,World Cup,Nigeria,Argentina,1,2
+2018-06-26,2018,World Cup,Iceland,Croatia,1,2
+2018-06-17,2018,World Cup,Costa Rica,Serbia,0,1
+2018-06-17,2018,World Cup,Brazil,Switzerland,1,1
+2018-06-22,2018,World Cup,Brazil,Costa Rica,2,0
+2018-06-22,2018,World Cup,Serbia,Switzerland,1,2
+2018-06-27,2018,World Cup,Serbia,Brazil,0,2
+2018-06-27,2018,World Cup,Switzerland,Costa Rica,2,2
+2018-06-17,2018,World Cup,Germany,Mexico,0,1
+2018-06-18,2018,World Cup,Sweden,South Korea,1,0
+2018-06-23,2018,World Cup,South Korea,Mexico,1,2
+2018-06-23,2018,World Cup,Germany,Sweden,2,1
+2018-06-27,2018,World Cup,South Korea,Germany,2,0
+2018-06-27,2018,World Cup,Mexico,Sweden,0,3
+2018-06-18,2018,World Cup,Belgium,Panama,3,0
+2018-06-18,2018,World Cup,Tunisia,England,1,2
+2018-06-23,2018,World Cup,Belgium,Tunisia,5,2
+2018-06-24,2018,World Cup,England,Panama,6,1
+2018-06-28,2018,World Cup,England,Belgium,0,1
+2018-06-28,2018,World Cup,Panama,Tunisia,1,2
+2018-06-19,2018,World Cup,Colombia,Japan,1,2
+2018-06-19,2018,World Cup,Poland,Senegal,1,2
+2018-06-24,2018,World Cup,Japan,Senegal,2,2
+2018-06-24,2018,World Cup,Poland,Colombia,0,3
+2018-06-28,2018,World Cup,Japan,Poland,0,1
+2018-06-28,2018,World Cup,Senegal,Colombia,0,1
+2022-11-20,2022,World Cup,Qatar,Ecuador,0,2
+2022-11-21,2022,World Cup,Senegal,Netherlands,0,2
+2022-11-25,2022,World Cup,Qatar,Senegal,1,3
+2022-11-25,2022,World Cup,Netherlands,Ecuador,1,1
+2022-11-29,2022,World Cup,Ecuador,Senegal,1,2
+2022-11-21,2022,World Cup,England,Iran,6,2
+2022-11-21,2022,World Cup,USA,Wales,1,1
+2022-11-25,2022,World Cup,Wales,Iran,0,2
+2022-11-25,2022,World Cup,England,USA,0,0
+2022-11-29,2022,World Cup,Wales,England,0,3
+2022-11-29,2022,World Cup,Iran,USA,0,1
+2022-11-22,2022,World Cup,Argentina,Saudi Arabia,1,2
+2022-11-22,2022,World Cup,Mexico,Poland,0,0
+2022-11-26,2022,World Cup,Poland,Saudi Arabia,2,0
+2022-11-26,2022,World Cup,Argentina,Mexico,2,0
+2022-11-30,2022,World Cup,Poland,Argentina,0,2
+2022-11-30,2022,World Cup,Saudi Arabia,Mexico,1,2
+2022-11-22,2022,World Cup,Denmark,Tunisia,0,0
+2022-11-22,2022,World Cup,France,Australia,4,1
+2022-11-26,2022,World Cup,Tunisia,Australia,0,1
+2022-11-26,2022,World Cup,France,Denmark,2,1
+2022-11-30,2022,World Cup,Australia,Denmark,1,0
+2022-11-23,2022,World Cup,Germany,Japan,1,2
+2022-11-23,2022,World Cup,Spain,Costa Rica,7,0
+2022-11-27,2022,World Cup,Japan,Costa Rica,0,1
+2022-11-27,2022,World Cup,Spain,Germany,1,1
+2022-12-01,2022,World Cup,Japan,Spain,2,1
+2022-11-23,2022,World Cup,Morocco,Croatia,0,0
+2022-11-23,2022,World Cup,Belgium,Canada,1,0
+2022-11-27,2022,World Cup,Belgium,Morocco,0,2
+2022-11-27,2022,World Cup,Croatia,Canada,4,1
+2022-12-01,2022,World Cup,Croatia,Belgium,0,0
+2022-12-01,2022,World Cup,Canada,Morocco,1,2
+2022-11-24,2022,World Cup,Switzerland,Cameroon,1,0
+2022-11-24,2022,World Cup,Brazil,Serbia,2,0
+2022-11-28,2022,World Cup,Cameroon,Serbia,3,3
+2022-11-28,2022,World Cup,Brazil,Switzerland,1,0
+2022-12-02,2022,World Cup,Serbia,Switzerland,2,3
+2022-12-02,2022,World Cup,Cameroon,Brazil,1,0
+2022-11-24,2022,World Cup,Uruguay,South Korea,0,0
+2022-11-24,2022,World Cup,Portugal,Ghana,3,2
+2022-11-28,2022,World Cup,South Korea,Ghana,2,3
+2022-11-28,2022,World Cup,Portugal,Uruguay,2,0
+2022-12-02,2022,World Cup,Ghana,Uruguay,0,2
+2026-06-27,2026,World Cup,Mexico,South Africa,2,0
+2026-06-27,2026,World Cup,South Korea,Czech Republic,2,1
+2026-06-27,2026,World Cup,Czech Republic,South Africa,1,1
+2026-06-27,2026,World Cup,Mexico,South Korea,1,0
+2026-06-27,2026,World Cup,Czech Republic,Mexico,0,3
+2026-06-27,2026,World Cup,South Africa,South Korea,1,0
+2026-06-27,2026,World Cup,Qatar,Switzerland,1,1
+2026-06-27,2026,World Cup,Canada,Qatar,6,0
+2026-06-27,2026,World Cup,Switzerland,Canada,2,1
+2026-06-27,2026,World Cup,Brazil,Morocco,1,1
+2026-06-27,2026,World Cup,Haiti,Scotland,0,1
+2026-06-27,2026,World Cup,Scotland,Morocco,0,1
+2026-06-27,2026,World Cup,Brazil,Haiti,3,0
+2026-06-27,2026,World Cup,Scotland,Brazil,0,3
+2026-06-27,2026,World Cup,Morocco,Haiti,4,2
+2026-06-27,2026,World Cup,USA,Paraguay,4,1
+2026-06-27,2026,World Cup,Australia,Turkey,2,0
+2026-06-27,2026,World Cup,USA,Australia,2,0
+2026-06-27,2026,World Cup,Turkey,Paraguay,0,1
+2026-06-27,2026,World Cup,Turkey,USA,3,2
+2026-06-27,2026,World Cup,Paraguay,Australia,0,0
+2026-06-27,2026,World Cup,Ivory Coast,Ecuador,1,0
+2026-06-27,2026,World Cup,Germany,Ivory Coast,2,1
+2026-06-27,2026,World Cup,Ecuador,Germany,2,1
+2026-06-27,2026,World Cup,Netherlands,Japan,2,2
+2026-06-27,2026,World Cup,Sweden,Tunisia,5,1
+2026-06-27,2026,World Cup,Netherlands,Sweden,5,1
+2026-06-27,2026,World Cup,Tunisia,Japan,0,4
+2026-06-27,2026,World Cup,Japan,Sweden,1,1
+2026-06-27,2026,World Cup,Tunisia,Netherlands,1,3
+2026-06-27,2026,World Cup,Belgium,Egypt,1,1
+2026-06-27,2026,World Cup,Iran,New Zealand,2,2
+2026-06-27,2026,World Cup,Belgium,Iran,0,0
+2026-06-27,2026,World Cup,New Zealand,Egypt,1,3
+2026-06-27,2026,World Cup,Egypt,Iran,1,1
+2026-06-27,2026,World Cup,New Zealand,Belgium,1,5
+2026-06-27,2026,World Cup,Spain,Cape Verde,0,0
+2026-06-27,2026,World Cup,Saudi Arabia,Uruguay,1,1
+2026-06-27,2026,World Cup,Spain,Saudi Arabia,4,0
+2026-06-27,2026,World Cup,Uruguay,Cape Verde,2,2
+2026-06-27,2026,World Cup,Cape Verde,Saudi Arabia,0,0
+2026-06-27,2026,World Cup,Uruguay,Spain,0,1
+2026-06-27,2026,World Cup,France,Senegal,3,1
+2026-06-27,2026,World Cup,Iraq,Norway,1,4
+2026-06-27,2026,World Cup,France,Iraq,3,0
+2026-06-27,2026,World Cup,Norway,Senegal,3,2
+2026-06-27,2026,World Cup,Norway,France,1,4
+2026-06-27,2026,World Cup,Senegal,Iraq,5,0
+2026-06-27,2026,World Cup,Argentina,Algeria,3,0
+2026-06-27,2026,World Cup,Austria,Jordan,3,1
+2026-06-27,2026,World Cup,Argentina,Austria,2,0
+2026-06-27,2026,World Cup,Jordan,Algeria,1,2
+2026-06-27,2026,World Cup,Portugal,DR Congo,1,1
+2026-06-27,2026,World Cup,Uzbekistan,Colombia,1,3
+2026-06-27,2026,World Cup,Portugal,Uzbekistan,5,0
+2026-06-27,2026,World Cup,Colombia,DR Congo,1,0
+2026-06-27,2026,World Cup,England,Croatia,4,2
+2026-06-27,2026,World Cup,Ghana,Panama,1,0
+2026-06-27,2026,World Cup,England,Ghana,0,0
+2026-06-27,2026,World Cup,Panama,Croatia,0,1

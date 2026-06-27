@@ -1,0 +1,116 @@
+{
+  "model": "XGBoost + Poisson Ensemble",
+  "n_training_matches": 95,
+  "features": [
+    "elo_diff",
+    "elo_win_prob",
+    "xg_home",
+    "xg_away",
+    "xg_diff",
+    "p_home_win",
+    "p_draw",
+    "p_away_win",
+    "avg_scored_h5",
+    "avg_conced_h5",
+    "avg_scored_a5",
+    "avg_conced_a5",
+    "win_rate_h",
+    "win_rate_a",
+    "pts_h",
+    "pts_a",
+    "gd_h",
+    "gd_a",
+    "gd_diff",
+    "h2h_home_wr",
+    "h2h_matches",
+    "exp_h",
+    "exp_a"
+  ],
+  "cv_metrics": {
+    "log_loss_mean": 1.3934,
+    "log_loss_std": 0.1367,
+    "accuracy_mean": 43.2,
+    "accuracy_std": 10.7
+  },
+  "feature_importance": {
+    "elo_diff": 0.0691,
+    "p_home_win": 0.0682,
+    "elo_win_prob": 0.06,
+    "gd_h": 0.0516,
+    "exp_h": 0.0502,
+    "avg_scored_a5": 0.0501,
+    "win_rate_h": 0.0488,
+    "exp_a": 0.0467,
+    "gd_diff": 0.0458,
+    "avg_conced_a5": 0.045,
+    "xg_home": 0.0445,
+    "win_rate_a": 0.0439,
+    "gd_a": 0.0439,
+    "avg_scored_h5": 0.0434,
+    "xg_away": 0.0431,
+    "pts_h": 0.043,
+    "p_away_win": 0.0415,
+    "avg_conced_h5": 0.0412,
+    "p_draw": 0.0412,
+    "pts_a": 0.0407,
+    "xg_diff": 0.0382,
+    "h2h_home_wr": 0.0,
+    "h2h_matches": 0.0
+  },
+  "prediction": {
+    "match": "Croatia vs Ghana",
+    "competition": "FIFA World Cup 2026",
+    "elo_croatia": 1876.0,
+    "elo_ghana": 1680.0,
+    "xg_croatia": 1.895,
+    "xg_ghana": 0.846,
+    "poisson": {
+      "croatia_win": 60.8,
+      "draw": 21.8,
+      "ghana_win": 16.2
+    },
+    "xgboost": {
+      "croatia_win": 44.9,
+      "draw": 29.2,
+      "ghana_win": 25.9
+    },
+    "ensemble": {
+      "croatia_win": 51.3,
+      "draw": 26.2,
+      "ghana_win": 22.0
+    },
+    "predicted_score": "1-0",
+    "top_scorelines": [
+      {
+        "score": "1-0",
+        "prob_pct": 12.23,
+        "result": "Croatia W"
+      },
+      {
+        "score": "2-0",
+        "prob_pct": 11.58,
+        "result": "Croatia W"
+      },
+      {
+        "score": "1-1",
+        "prob_pct": 10.34,
+        "result": "Draw"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 9.8,
+        "result": "Croatia W"
+      },
+      {
+        "score": "3-0",
+        "prob_pct": 7.31,
+        "result": "Croatia W"
+      },
+      {
+        "score": "0-0",
+        "prob_pct": 6.45,
+        "result": "Draw"
+      }
+    ]
+  }
+}

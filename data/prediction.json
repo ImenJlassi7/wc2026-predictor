@@ -1,0 +1,55 @@
+{
+  "match": "Croatia vs Ghana",
+  "competition": "FIFA World Cup 2026 \u2014 Group L",
+  "xg": {
+    "Croatia": 1.858,
+    "Ghana": 1.243
+  },
+  "probabilities": {
+    "croatia_win": 50.6,
+    "draw": 22.7,
+    "ghana_win": 25.4
+  },
+  "predicted_score": {
+    "Croatia": 1,
+    "Ghana": 1
+  },
+  "top_scorelines": [
+    {
+      "score": "1-1",
+      "prob_pct": 10.4,
+      "result": "Draw"
+    },
+    {
+      "score": "2-1",
+      "prob_pct": 9.66,
+      "result": "Croatia W"
+    },
+    {
+      "score": "1-0",
+      "prob_pct": 8.36,
+      "result": "Croatia W"
+    },
+    {
+      "score": "2-0",
+      "prob_pct": 7.77,
+      "result": "Croatia W"
+    },
+    {
+      "score": "1-2",
+      "prob_pct": 6.46,
+      "result": "Ghana W"
+    },
+    {
+      "score": "2-2",
+      "prob_pct": 6.0,
+      "result": "Draw"
+    }
+  ],
+  "monte_carlo_n": 100000,
+  "monte_carlo_probabilities": {
+    "croatia_win": 51.6,
+    "draw": 22.7,
+    "ghana_win": 25.8
+  }
+}

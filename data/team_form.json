@@ -1,0 +1,20 @@
+{
+  "Croatia": {
+    "avg_scored_last5": 1.6,
+    "avg_conceded_last5": 1.2,
+    "avg_pts_last5": 1.6,
+    "win_rate_last5": 0.4,
+    "overall_avg_scored": 1.64,
+    "overall_avg_conceded": 1.27,
+    "total_wc_matches": 11
+  },
+  "Ghana": {
+    "avg_scored_last5": 1.4,
+    "avg_conceded_last5": 1.8,
+    "avg_pts_last5": 1.2,
+    "win_rate_last5": 0.4,
+    "overall_avg_scored": 1.25,
+    "overall_avg_conceded": 1.62,
+    "total_wc_matches": 8
+  }
+}

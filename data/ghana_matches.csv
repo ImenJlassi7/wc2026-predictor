@@ -1,0 +1,9 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2014-06-16,2014,World Cup,Ghana,USA,1,1,2,L,0,,,,0.0
+2014-06-21,2014,World Cup,Ghana,Germany,0,2,2,D,1,1.0,2.0,0.0,0.0
+2014-06-26,2014,World Cup,Ghana,Portugal,0,1,2,L,0,1.5,2.0,0.5,0.0
+2022-11-24,2022,World Cup,Ghana,Portugal,0,2,3,L,0,1.33,2.0,0.33,0.0
+2022-11-28,2022,World Cup,Ghana,South Korea,0,3,2,W,3,1.5,2.25,0.25,0.0
+2022-12-02,2022,World Cup,Ghana,Uruguay,1,0,2,L,0,1.8,2.2,0.8,0.2
+2026-06-27,2026,World Cup,Ghana,Panama,1,1,0,W,3,1.6,2.2,0.8,0.2
+2026-06-27,2026,World Cup,Ghana,England,0,0,0,D,1,1.4,1.8,1.2,0.4
