@@ -1,0 +1,238 @@
+[
+  {
+    "match": "France vs Morocco",
+    "date": "Demain 21h00",
+    "team_a": "France",
+    "team_b": "Morocco",
+    "xg": {
+      "France": 1.851,
+      "Morocco": 0.801
+    },
+    "probabilities": {
+      "France_win": 61.9,
+      "draw": 22.1,
+      "Morocco_win": 15.7
+    },
+    "monte_carlo": {
+      "France_win": 62.2,
+      "draw": 22.1,
+      "Morocco_win": 15.7
+    },
+    "predicted_score": "1-0",
+    "predicted_winner": "France",
+    "winner_confidence_pct": 61.9,
+    "penalties": {
+      "France": 50.0,
+      "Morocco": 50.0
+    },
+    "top_scorelines": [
+      {
+        "score": "1-0",
+        "prob_pct": 13.05,
+        "result": "France W"
+      },
+      {
+        "score": "2-0",
+        "prob_pct": 12.07,
+        "result": "France W"
+      },
+      {
+        "score": "1-1",
+        "prob_pct": 10.46,
+        "result": "Draw"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 9.68,
+        "result": "France W"
+      },
+      {
+        "score": "3-0",
+        "prob_pct": 7.45,
+        "result": "France W"
+      },
+      {
+        "score": "0-0",
+        "prob_pct": 7.05,
+        "result": "Draw"
+      }
+    ]
+  },
+  {
+    "match": "Spain vs Belgium",
+    "date": "Ven. 10/07 20h00",
+    "team_a": "Spain",
+    "team_b": "Belgium",
+    "xg": {
+      "Spain": 1.306,
+      "Belgium": 1.419
+    },
+    "probabilities": {
+      "Spain_win": 34.6,
+      "draw": 25.6,
+      "Belgium_win": 39.7
+    },
+    "monte_carlo": {
+      "Spain_win": 34.8,
+      "draw": 25.5,
+      "Belgium_win": 39.7
+    },
+    "predicted_score": "1-1",
+    "predicted_winner": "Belgium",
+    "winner_confidence_pct": 39.7,
+    "penalties": {
+      "Spain": 50.0,
+      "Belgium": 50.0
+    },
+    "top_scorelines": [
+      {
+        "score": "1-1",
+        "prob_pct": 12.15,
+        "result": "Draw"
+      },
+      {
+        "score": "0-1",
+        "prob_pct": 9.3,
+        "result": "Belgium W"
+      },
+      {
+        "score": "1-2",
+        "prob_pct": 8.62,
+        "result": "Belgium W"
+      },
+      {
+        "score": "1-0",
+        "prob_pct": 8.56,
+        "result": "Spain W"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 7.93,
+        "result": "Spain W"
+      },
+      {
+        "score": "0-2",
+        "prob_pct": 6.6,
+        "result": "Belgium W"
+      }
+    ]
+  },
+  {
+    "match": "Norway vs England",
+    "date": "Sam. 11/07 22h00",
+    "team_a": "Norway",
+    "team_b": "England",
+    "xg": {
+      "Norway": 2.324,
+      "England": 3.293
+    },
+    "probabilities": {
+      "Norway_win": 25.5,
+      "draw": 16.0,
+      "England_win": 52.6
+    },
+    "monte_carlo": {
+      "Norway_win": 26.4,
+      "draw": 16.1,
+      "England_win": 57.5
+    },
+    "predicted_score": "2-3",
+    "predicted_winner": "England",
+    "winner_confidence_pct": 52.6,
+    "penalties": {
+      "Norway": 50.0,
+      "England": 50.0
+    },
+    "top_scorelines": [
+      {
+        "score": "2-3",
+        "prob_pct": 5.84,
+        "result": "England W"
+      },
+      {
+        "score": "2-2",
+        "prob_pct": 5.32,
+        "result": "Draw"
+      },
+      {
+        "score": "1-3",
+        "prob_pct": 5.03,
+        "result": "England W"
+      },
+      {
+        "score": "2-4",
+        "prob_pct": 4.81,
+        "result": "England W"
+      },
+      {
+        "score": "1-2",
+        "prob_pct": 4.58,
+        "result": "England W"
+      },
+      {
+        "score": "3-3",
+        "prob_pct": 4.53,
+        "result": "Draw"
+      }
+    ]
+  },
+  {
+    "match": "Argentina vs Switzerland",
+    "date": "Dim. 12/07 02h00",
+    "team_a": "Argentina",
+    "team_b": "Switzerland",
+    "xg": {
+      "Argentina": 1.89,
+      "Switzerland": 1.245
+    },
+    "probabilities": {
+      "Argentina_win": 52.1,
+      "draw": 22.4,
+      "Switzerland_win": 25.1
+    },
+    "monte_carlo": {
+      "Argentina_win": 52.2,
+      "draw": 22.4,
+      "Switzerland_win": 25.4
+    },
+    "predicted_score": "1-1",
+    "predicted_winner": "Argentina",
+    "winner_confidence_pct": 52.1,
+    "penalties": {
+      "Argentina": 50.0,
+      "Switzerland": 50.0
+    },
+    "top_scorelines": [
+      {
+        "score": "1-1",
+        "prob_pct": 10.23,
+        "result": "Draw"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 9.67,
+        "result": "Argentina W"
+      },
+      {
+        "score": "1-0",
+        "prob_pct": 8.22,
+        "result": "Argentina W"
+      },
+      {
+        "score": "2-0",
+        "prob_pct": 7.77,
+        "result": "Argentina W"
+      },
+      {
+        "score": "1-2",
+        "prob_pct": 6.37,
+        "result": "Switzerland W"
+      },
+      {
+        "score": "3-1",
+        "prob_pct": 6.1,
+        "result": "Argentina W"
+      }
+    ]
+  }
+]

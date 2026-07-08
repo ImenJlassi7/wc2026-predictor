@@ -1,0 +1,13 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2014-06-14,2014,World Cup,England,Italy,1,1,2,L,0,,,,0.0
+2014-06-19,2014,World Cup,England,Uruguay,0,1,2,L,0,1.0,2.0,0.0,0.0
+2014-06-24,2014,World Cup,England,Costa Rica,0,0,0,D,1,1.0,2.0,0.0,0.0
+2018-06-18,2018,World Cup,England,Tunisia,0,2,1,W,3,0.67,1.33,0.33,0.0
+2018-06-24,2018,World Cup,England,Panama,1,6,1,W,3,1.0,1.25,1.0,0.2
+2018-06-28,2018,World Cup,England,Belgium,1,0,1,L,0,2.0,1.2,1.4,0.4
+2022-11-21,2022,World Cup,England,Iran,1,6,2,W,3,1.8,1.0,1.4,0.4
+2022-11-25,2022,World Cup,England,USA,1,0,0,D,1,2.8,1.0,2.0,0.6
+2022-11-29,2022,World Cup,England,Wales,0,3,0,W,3,2.8,1.0,2.0,0.6
+2026-06-27,2026,World Cup,England,Croatia,1,4,2,W,3,3.0,0.8,2.0,0.6
+2026-06-27,2026,World Cup,England,Ghana,1,0,0,D,1,2.6,1.0,2.0,0.6
+2026-06-27,2026,World Cup,England,Panama,0,2,0,W,3,2.6,0.8,2.2,0.6

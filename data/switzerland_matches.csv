@@ -1,0 +1,12 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2014-06-15,2014,World Cup,Switzerland,Ecuador,1,2,1,W,3,,,,0.0
+2014-06-20,2014,World Cup,Switzerland,France,1,2,5,L,0,2.0,1.0,3.0,0.5
+2014-06-25,2014,World Cup,Switzerland,Honduras,0,3,0,W,3,2.0,3.0,1.5,0.33
+2018-06-17,2018,World Cup,Switzerland,Brazil,0,1,1,D,1,2.33,2.0,2.0,0.5
+2018-06-22,2018,World Cup,Switzerland,Serbia,0,2,1,W,3,2.0,1.75,1.75,0.4
+2018-06-27,2018,World Cup,Switzerland,Costa Rica,1,2,2,D,1,2.0,1.6,2.0,0.6
+2022-11-24,2022,World Cup,Switzerland,Cameroon,1,1,0,W,3,2.0,1.8,1.6,0.4
+2022-11-28,2022,World Cup,Switzerland,Brazil,0,0,1,L,0,1.8,0.8,2.2,0.6
+2022-12-02,2022,World Cup,Switzerland,Serbia,0,3,2,W,3,1.2,1.0,1.6,0.4
+2026-06-27,2026,World Cup,Switzerland,Qatar,0,1,1,D,1,1.6,1.2,2.0,0.6
+2026-06-27,2026,World Cup,Switzerland,Canada,1,2,1,W,3,1.4,1.2,1.6,0.4

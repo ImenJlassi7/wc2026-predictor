@@ -1,0 +1,7 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2018-06-15,2018,World Cup,Egypt,Uruguay,1,0,1,L,0,,,,0.0
+2018-06-19,2018,World Cup,Egypt,Russia,0,1,3,L,0,0.0,1.0,0.0,0.0
+2018-06-25,2018,World Cup,Egypt,Saudi Arabia,0,1,2,L,0,0.5,2.0,0.0,0.0
+2026-06-27,2026,World Cup,Egypt,Belgium,0,1,1,D,1,0.67,2.0,0.0,0.0
+2026-06-27,2026,World Cup,Egypt,New Zealand,0,3,1,W,3,0.75,1.75,0.25,0.0
+2026-06-27,2026,World Cup,Egypt,Iran,1,1,1,D,1,1.2,1.6,0.8,0.2

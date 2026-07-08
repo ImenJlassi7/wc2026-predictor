@@ -1,20 +1,119 @@
 {
   "Croatia": {
+    "avg_scored_last5": 1.4,
+    "avg_conceded_last5": 1.0,
+    "avg_pts_last5": 1.6,
+    "win_rate_last5": 0.4,
+    "overall_avg_scored": 1.67,
+    "overall_avg_conceded": 1.25,
+    "total_wc_matches": 12
+  },
+  "Ghana": {
+    "avg_scored_last5": 1.2,
+    "avg_conceded_last5": 1.4,
+    "avg_pts_last5": 1.4,
+    "win_rate_last5": 0.4,
+    "overall_avg_scored": 1.22,
+    "overall_avg_conceded": 1.67,
+    "total_wc_matches": 9
+  },
+  "USA": {
     "avg_scored_last5": 1.6,
+    "avg_conceded_last5": 0.4,
+    "avg_pts_last5": 2.2,
+    "win_rate_last5": 0.6,
+    "overall_avg_scored": 1.56,
+    "overall_avg_conceded": 1.0,
+    "total_wc_matches": 9
+  },
+  "Belgium": {
+    "avg_scored_last5": 0.4,
+    "avg_conceded_last5": 0.6,
+    "avg_pts_last5": 1.2,
+    "win_rate_last5": 0.2,
+    "overall_avg_scored": 1.67,
+    "overall_avg_conceded": 0.58,
+    "total_wc_matches": 12
+  },
+  "Argentina": {
+    "avg_scored_last5": 2.0,
+    "avg_conceded_last5": 0.4,
+    "avg_pts_last5": 2.4,
+    "win_rate_last5": 0.8,
+    "overall_avg_scored": 1.83,
+    "overall_avg_conceded": 0.92,
+    "total_wc_matches": 12
+  },
+  "Egypt": {
+    "avg_scored_last5": 1.2,
+    "avg_conceded_last5": 1.6,
+    "avg_pts_last5": 0.8,
+    "win_rate_last5": 0.2,
+    "overall_avg_scored": 1.17,
+    "overall_avg_conceded": 1.5,
+    "total_wc_matches": 6
+  },
+  "Switzerland": {
+    "avg_scored_last5": 1.4,
     "avg_conceded_last5": 1.2,
     "avg_pts_last5": 1.6,
     "win_rate_last5": 0.4,
-    "overall_avg_scored": 1.64,
-    "overall_avg_conceded": 1.27,
+    "overall_avg_scored": 1.73,
+    "overall_avg_conceded": 1.36,
     "total_wc_matches": 11
   },
-  "Ghana": {
-    "avg_scored_last5": 1.4,
-    "avg_conceded_last5": 1.8,
-    "avg_pts_last5": 1.2,
-    "win_rate_last5": 0.4,
-    "overall_avg_scored": 1.25,
-    "overall_avg_conceded": 1.62,
+  "Colombia": {
+    "avg_scored_last5": 1.8,
+    "avg_conceded_last5": 0.6,
+    "avg_pts_last5": 2.4,
+    "win_rate_last5": 0.8,
+    "overall_avg_scored": 1.62,
+    "overall_avg_conceded": 0.88,
     "total_wc_matches": 8
+  },
+  "France": {
+    "avg_scored_last5": 2.4,
+    "avg_conceded_last5": 0.6,
+    "avg_pts_last5": 2.6,
+    "win_rate_last5": 0.8,
+    "overall_avg_scored": 2.45,
+    "overall_avg_conceded": 0.64,
+    "total_wc_matches": 11
+  },
+  "Morocco": {
+    "avg_scored_last5": 1.2,
+    "avg_conceded_last5": 0.4,
+    "avg_pts_last5": 2.2,
+    "win_rate_last5": 0.6,
+    "overall_avg_scored": 1.33,
+    "overall_avg_conceded": 0.89,
+    "total_wc_matches": 9
+  },
+  "Spain": {
+    "avg_scored_last5": 2.6,
+    "avg_conceded_last5": 0.6,
+    "avg_pts_last5": 1.6,
+    "win_rate_last5": 0.4,
+    "overall_avg_scored": 1.75,
+    "overall_avg_conceded": 1.5,
+    "total_wc_matches": 12
+  },
+  "Norway": {
+    "avg_scored_last5": 3.5,
+    "avg_conceded_last5": 1.5,
+    "avg_pts_last5": 3.0,
+    "win_rate_last5": 0.67,
+    "overall_avg_scored": 2.67,
+    "overall_avg_conceded": 2.33,
+    "total_wc_matches": 3
+  },
+  "England": {
+    "avg_scored_last5": 2.6,
+    "avg_conceded_last5": 0.8,
+    "avg_pts_last5": 2.2,
+    "win_rate_last5": 0.6,
+    "overall_avg_scored": 2.08,
+    "overall_avg_conceded": 0.92,
+    "total_wc_matches": 12
   }
 }

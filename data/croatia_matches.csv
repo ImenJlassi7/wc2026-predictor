@@ -10,3 +10,4 @@ date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result
 2022-12-01,2022,World Cup,Croatia,Belgium,1,0,0,D,1,2.2,0.4,2.6,0.8
 2026-06-27,2026,World Cup,Croatia,England,0,2,4,L,0,1.8,0.4,2.2,0.6
 2026-06-27,2026,World Cup,Croatia,Panama,0,1,0,W,3,1.6,1.2,1.6,0.4
+2026-06-27,2026,World Cup,Croatia,Ghana,1,2,1,W,3,1.4,1.0,1.6,0.4

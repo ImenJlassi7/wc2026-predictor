@@ -1,0 +1,158 @@
+[
+  {
+    "match": "USA vs Belgium",
+    "team_a": "USA",
+    "team_b": "Belgium",
+    "xg": {
+      "USA": 0.949,
+      "Belgium": 0.986
+    },
+    "probabilities": {
+      "USA_win": 33.3,
+      "draw": 31.5,
+      "Belgium_win": 35.2
+    },
+    "monte_carlo": {
+      "USA_win": 33.6,
+      "draw": 31.2,
+      "Belgium_win": 35.2
+    },
+    "predicted_score": "0-0",
+    "top_scorelines": [
+      {
+        "score": "0-0",
+        "prob_pct": 14.44,
+        "result": "Draw"
+      },
+      {
+        "score": "0-1",
+        "prob_pct": 14.24,
+        "result": "Belgium W"
+      },
+      {
+        "score": "1-0",
+        "prob_pct": 13.71,
+        "result": "USA W"
+      },
+      {
+        "score": "1-1",
+        "prob_pct": 13.51,
+        "result": "Draw"
+      },
+      {
+        "score": "0-2",
+        "prob_pct": 7.02,
+        "result": "Belgium W"
+      },
+      {
+        "score": "1-2",
+        "prob_pct": 6.66,
+        "result": "Belgium W"
+      }
+    ]
+  },
+  {
+    "match": "Argentina vs Egypt",
+    "team_a": "Argentina",
+    "team_b": "Egypt",
+    "xg": {
+      "Argentina": 2.023,
+      "Egypt": 0.918
+    },
+    "probabilities": {
+      "Argentina_win": 62.5,
+      "draw": 20.7,
+      "Egypt_win": 16.3
+    },
+    "monte_carlo": {
+      "Argentina_win": 62.8,
+      "draw": 21.0,
+      "Egypt_win": 16.3
+    },
+    "predicted_score": "2-0",
+    "top_scorelines": [
+      {
+        "score": "2-0",
+        "prob_pct": 10.81,
+        "result": "Argentina W"
+      },
+      {
+        "score": "1-0",
+        "prob_pct": 10.68,
+        "result": "Argentina W"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 9.92,
+        "result": "Argentina W"
+      },
+      {
+        "score": "1-1",
+        "prob_pct": 9.81,
+        "result": "Draw"
+      },
+      {
+        "score": "3-0",
+        "prob_pct": 7.29,
+        "result": "Argentina W"
+      },
+      {
+        "score": "3-1",
+        "prob_pct": 6.69,
+        "result": "Argentina W"
+      }
+    ]
+  },
+  {
+    "match": "Switzerland vs Colombia",
+    "team_a": "Switzerland",
+    "team_b": "Colombia",
+    "xg": {
+      "Switzerland": 1.209,
+      "Colombia": 1.682
+    },
+    "probabilities": {
+      "Switzerland_win": 27.5,
+      "draw": 24.1,
+      "Colombia_win": 48.3
+    },
+    "monte_carlo": {
+      "Switzerland_win": 27.3,
+      "draw": 24.3,
+      "Colombia_win": 48.4
+    },
+    "predicted_score": "1-1",
+    "top_scorelines": [
+      {
+        "score": "1-1",
+        "prob_pct": 11.29,
+        "result": "Draw"
+      },
+      {
+        "score": "1-2",
+        "prob_pct": 9.5,
+        "result": "Colombia W"
+      },
+      {
+        "score": "0-1",
+        "prob_pct": 9.33,
+        "result": "Colombia W"
+      },
+      {
+        "score": "0-2",
+        "prob_pct": 7.85,
+        "result": "Colombia W"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 6.83,
+        "result": "Switzerland W"
+      },
+      {
+        "score": "1-0",
+        "prob_pct": 6.71,
+        "result": "Switzerland W"
+      }
+    ]
+  }
+]

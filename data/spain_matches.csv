@@ -1,0 +1,13 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2014-06-13,2014,World Cup,Spain,,1,1,5,L,0,,,,0.0
+2014-06-18,2014,World Cup,Spain,,1,0,2,L,0,1.0,5.0,0.0,0.0
+2014-06-23,2014,World Cup,Spain,,1,0,3,L,0,0.5,3.5,0.0,0.0
+2018-06-15,2018,World Cup,Spain,Portugal,0,3,3,D,1,0.33,3.33,0.0,0.0
+2018-06-20,2018,World Cup,Spain,Iran,0,1,0,W,3,1.0,3.25,0.25,0.0
+2018-06-25,2018,World Cup,Spain,Morocco,1,2,2,D,1,1.0,2.6,0.8,0.2
+2022-11-23,2022,World Cup,Spain,Costa Rica,1,7,0,W,3,1.2,2.0,1.0,0.2
+2022-11-27,2022,World Cup,Spain,Germany,1,1,1,D,1,2.6,1.6,1.6,0.4
+2022-12-01,2022,World Cup,Spain,Japan,0,1,2,L,0,2.8,1.2,1.8,0.4
+2026-06-27,2026,World Cup,Spain,Cape Verde,1,0,0,D,1,2.4,1.0,1.6,0.4
+2026-06-27,2026,World Cup,Spain,Saudi Arabia,1,4,0,W,3,2.2,1.0,1.2,0.2
+2026-06-27,2026,World Cup,Spain,Uruguay,0,1,0,W,3,2.6,0.6,1.6,0.4

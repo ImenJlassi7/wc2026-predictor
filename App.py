@@ -1,529 +1,299 @@
 """
-Step 5 — Streamlit App
-Football Score Predictor — WC 2026
-Run: streamlit run app.py
+WC 2026 Predictor — Simple & Clean
 """
-
-import json
-import math
-import random
-import numpy as np
+import json, math, random
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-import plotly.express as px
 from pathlib import Path
 from collections import defaultdict
 
-# ─── FLAG IMAGES ──────────────────────────────────────────────────────────────
-# Using flagcdn.com — reliable SVG flags by ISO 3166-1 alpha-2 code
-FLAG_URLS = {
-    "Croatia": "https://flagcdn.com/hr.svg",
-    "Ghana":   "https://flagcdn.com/gh.svg",
-}
+st.set_page_config(page_title="WC 2026 Predictor", page_icon="🏆", layout="wide")
 
-def flag_img(team: str, height: int = 28) -> str:
-    url = FLAG_URLS.get(team, "")
-    if not url:
-        return ""
-    return f'<img src="{url}" height="{height}" style="vertical-align:middle;border-radius:3px;box-shadow:0 1px 3px rgba(0,0,0,0.4);">'
-
-# ─── PAGE CONFIG ──────────────────────────────────────────────────────────────
-st.set_page_config(
-    page_title="WC 2026 Score Predictor",
-    page_icon="⚽",
-    layout="wide",
-    initial_sidebar_state="expanded",
-)
-
-# ─── STYLE ────────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-    .main { background-color: #0e1117; }
-    .metric-card {
-        background: #1e2130;
-        border-radius: 12px;
-        padding: 1.2rem 1.5rem;
-        text-align: center;
-        border: 1px solid #2d3250;
-    }
-    .metric-label { font-size: 0.8rem; color: #888; margin-bottom: 4px; }
-    .metric-value { font-size: 2rem; font-weight: 700; color: #fff; }
-    .metric-sub   { font-size: 0.75rem; color: #666; margin-top: 4px; }
-    .score-box {
-        background: linear-gradient(135deg, #1a237e, #0d47a1);
-        border-radius: 16px;
-        padding: 2rem;
-        text-align: center;
-    }
-    .score-num { font-size: 4rem; font-weight: 900; color: #fff; letter-spacing: 8px; }
-    .score-label { font-size: 0.9rem; color: #90caf9; margin-top: 8px; }
-    .pill-win  { background:#1b5e20; color:#a5d6a7; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; }
-    .pill-draw { background:#1a237e; color:#90caf9; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; }
-    .pill-lose { background:#b71c1c; color:#ef9a9a; padding:3px 10px; border-radius:20px; font-size:0.75rem; font-weight:600; }
-    div[data-testid="stMetric"] { background:#1e2130; border-radius:10px; padding:1rem; border:1px solid #2d3250; }
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap');
+* { font-family: 'Inter', sans-serif; }
+.winner-card {
+    background: linear-gradient(135deg, #0d3b1e, #1b5e20);
+    border: 2px solid #2e7d32;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.winner-label { font-size: 0.85rem; color: #81c784; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.winner-name  { font-size: 2.4rem; font-weight: 900; color: #fff; margin: 8px 0; }
+.winner-conf  { font-size: 1rem; color: #a5d6a7; }
+.score-card {
+    background: linear-gradient(135deg, #0a1929, #0d47a1);
+    border: 2px solid #1565c0;
+    border-radius: 20px;
+    padding: 2rem;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+.score-label  { font-size: 0.85rem; color: #90caf9; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+.score-num    { font-size: 3.5rem; font-weight: 900; color: #fff; letter-spacing: 6px; margin: 8px 0; }
+.pen-card {
+    background: #1a1a2e;
+    border: 1px solid #333;
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    text-align: center;
+}
+.pen-label { font-size: 0.75rem; color: #888; text-transform: uppercase; margin-bottom: 6px; }
+.pen-winner { font-size: 1.1rem; font-weight: 700; color: #ffd54f; }
+.hist-header { font-size: 1.1rem; font-weight: 700; color: #fff; margin: 1.5rem 0 0.75rem; }
+.match-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px; border-radius: 8px;
+    margin-bottom: 6px; background: #1a1a2e;
+    font-size: 0.88rem;
+}
+.res-W { background:#1b5e20; color:#a5d6a7; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.75rem; }
+.res-D { background:#1a237e; color:#90caf9; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.75rem; }
+.res-L { background:#b71c1c; color:#ef9a9a; padding:2px 8px; border-radius:4px; font-weight:700; font-size:0.75rem; }
 </style>
 """, unsafe_allow_html=True)
 
-DATA_DIR = Path("data")
+# ── CONSTANTS ──────────────────────────────────────────────────────────────────
+DATA_DIR   = Path("data")
+LEAGUE_AVG = 1.35
+FORM_WEIGHT= 0.30
+MAX_GOALS  = 7
+random.seed(42)
 
-# ─── CONSTANTS ────────────────────────────────────────────────────────────────
-LEAGUE_AVG  = 1.35
-FORM_WEIGHT = 0.30
-MAX_GOALS   = 7
-K_FACTOR    = 32
-
-ELO_SEED = {
-    "France":1900,"Brazil":1880,"England":1870,"Spain":1860,"Argentina":1850,
-    "Portugal":1845,"Belgium":1830,"Netherlands":1820,"Germany":1810,"Italy":1800,
-    "Uruguay":1770,"Croatia":1750,"Denmark":1740,"Switzerland":1730,"Mexico":1710,
-    "USA":1700,"Colombia":1690,"Senegal":1780,"Morocco":1770,"Japan":1760,
-    "South Korea":1750,"Australia":1730,"Serbia":1720,"Poland":1710,"Canada":1700,
-    "Ecuador":1690,"Iran":1680,"Tunisia":1670,"Ghana":1660,"Nigeria":1650,
-    "Cameroon":1640,"Algeria":1630,"Costa Rica":1620,"Peru":1610,"Sweden":1595,
-    "Norway":1590,"Austria":1585,"Czech Republic":1580,"Turkey":1575,
-    "Scotland":1570,"Wales":1565,"Russia":1560,"Iceland":1555,
-    "Panama":1510,"Saudi Arabia":1505,"Qatar":1500,"Honduras":1490,
-    "South Africa":1480,"Ivory Coast":1475,"DR Congo":1470,
-    "Bosnia-Herzegovina":1550,"Cape Verde":1495,"New Zealand":1460,
-    "Paraguay":1520,"Haiti":1450,"Jordan":1455,"Egypt":1530,
-    "Iraq":1465,"Uzbekistan":1470,
+FLAG_IMGS = {
+    "France":      "https://flagcdn.com/w40/fr.png",
+    "Morocco":     "https://flagcdn.com/w40/ma.png",
+    "Spain":       "https://flagcdn.com/w40/es.png",
+    "Belgium":     "https://flagcdn.com/w40/be.png",
+    "Norway":      "https://flagcdn.com/w40/no.png",
+    "England":     "https://flagcdn.com/w40/gb-eng.png",
+    "Argentina":   "https://flagcdn.com/w40/ar.png",
+    "Switzerland": "https://flagcdn.com/w40/ch.png",
+    "Croatia":     "https://flagcdn.com/w40/hr.png",
+    "Ghana":       "https://flagcdn.com/w40/gh.png",
+    "USA":         "https://flagcdn.com/w40/us.png",
+    "Egypt":       "https://flagcdn.com/w40/eg.png",
+    "Colombia":    "https://flagcdn.com/w40/co.png",
 }
-DEFAULT_ELO = 1500
 
-# ─── CORE FUNCTIONS ───────────────────────────────────────────────────────────
+MATCHES = {
+    "🏆 QF1 — France vs Maroc":           ("France",       "Morocco",     "Demain 21h00"),
+    "🏆 QF2 — Espagne vs Belgique":        ("Spain",        "Belgium",     "Ven. 10/07 20h00"),
+    "🏆 QF3 — Norvège vs Angleterre":      ("Norway",       "England",     "Sam. 11/07 22h00"),
+    "🏆 QF4 — Argentine vs Suisse":        ("Argentina",    "Switzerland", "Dim. 12/07 02h00"),
+  }
 
+# ── CORE MATH ─────────────────────────────────────────────────────────────────
 def poisson_prob(lam, k):
-    return math.exp(-lam) * (lam ** k) / math.factorial(k)
+    return math.exp(-lam) * (lam**k) / math.factorial(k)
 
-def expected_elo(ra, rb):
-    return 1 / (1 + 10 ** ((rb - ra) / 400))
+def compute_xg(a, b):
+    xg_a = (a["overall_avg_scored"]/LEAGUE_AVG) * (b["overall_avg_conceded"]/LEAGUE_AVG) * LEAGUE_AVG
+    xg_b = (b["overall_avg_scored"]/LEAGUE_AVG) * (a["overall_avg_conceded"]/LEAGUE_AVG) * LEAGUE_AVG
+    xg_a = xg_a*(1-FORM_WEIGHT) + a["avg_scored_last5"]*FORM_WEIGHT
+    xg_b = xg_b*(1-FORM_WEIGHT) + b["avg_scored_last5"]*FORM_WEIGHT
+    return max(xg_a, 0.01), max(xg_b, 0.01)
 
-def update_elo(ra, rb, score_a):
-    exp = expected_elo(ra, rb)
-    return ra + K_FACTOR*(score_a-exp), rb + K_FACTOR*((1-score_a)-(1-exp))
+def score_matrix(xg_a, xg_b):
+    return {(i,j): poisson_prob(xg_a,i)*poisson_prob(xg_b,j)
+            for i in range(MAX_GOALS) for j in range(MAX_GOALS)}
 
-def compute_xg(ovr_sc_h, ovr_cc_h, form_h, ovr_sc_a, ovr_cc_a, form_a):
-    atk_h = ovr_sc_h / LEAGUE_AVG
-    atk_a = ovr_sc_a / LEAGUE_AVG
-    def_h = ovr_cc_h / LEAGUE_AVG
-    def_a = ovr_cc_a / LEAGUE_AVG
-    xg_h  = atk_h * def_a * LEAGUE_AVG
-    xg_a  = atk_a * def_h * LEAGUE_AVG
-    xg_h  = xg_h*(1-FORM_WEIGHT) + form_h*FORM_WEIGHT
-    xg_a  = xg_a*(1-FORM_WEIGHT) + form_a*FORM_WEIGHT
-    return max(xg_h, 0.01), max(xg_a, 0.01)
+def outcome_probs(mat):
+    return (sum(p for (i,j),p in mat.items() if i>j),
+            sum(p for (i,j),p in mat.items() if i==j),
+            sum(p for (i,j),p in mat.items() if i<j))
 
-def score_matrix(xg_h, xg_a):
-    m = {}
-    for i in range(MAX_GOALS):
-        for j in range(MAX_GOALS):
-            m[(i,j)] = poisson_prob(xg_h, i) * poisson_prob(xg_a, j)
-    return m
-
-def outcome_probs(m):
-    pw = sum(p for (i,j),p in m.items() if i>j)
-    pd_ = sum(p for (i,j),p in m.items() if i==j)
-    pl = sum(p for (i,j),p in m.items() if i<j)
-    return pw, pd_, pl
-
-def monte_carlo(xg_h, xg_a, n=50_000):
-    random.seed(42)
-    def sample(lam):
-        L=math.exp(-lam); k,p=0,1.0
-        while p>L: p*=random.random(); k+=1
-        return k-1
-    hw=dr=aw=0
-    scores={}
+def simulate_penalties(n=50_000):
+    random.seed(99)
+    a_wins = 0
     for _ in range(n):
-        g1,g2=sample(xg_h),sample(xg_a)
-        sc=(min(g1,6),min(g2,6))
-        scores[sc]=scores.get(sc,0)+1
-        if g1>g2: hw+=1
-        elif g1==g2: dr+=1
-        else: aw+=1
-    return hw/n, dr/n, aw/n, scores
+        def shoot(): return sum(1 for _ in range(5) if random.random()<0.75)
+        ga,gb = shoot(),shoot()
+        while ga==gb:
+            ga += random.random()<0.75
+            gb += random.random()<0.75
+        if ga>gb: a_wins+=1
+    return round(a_wins/n*100,1), round((1-a_wins/n)*100,1)
 
-# ─── LOAD & PROCESS DATA ──────────────────────────────────────────────────────
-
+# ── LOAD DATA ─────────────────────────────────────────────────────────────────
 @st.cache_data
-def load_data():
+def load_all():
     df = pd.read_csv(DATA_DIR/"wc_all_matches.csv").dropna(subset=["home_goals","away_goals"])
     df["date"] = pd.to_datetime(df["date"])
     df["home_goals"] = df["home_goals"].astype(int)
     df["away_goals"] = df["away_goals"].astype(int)
-    return df.sort_values("date").reset_index(drop=True)
+    with open(DATA_DIR/"team_form.json") as f:
+        form = json.load(f)
+    return df.sort_values("date").reset_index(drop=True), form
 
-@st.cache_data
-def build_team_histories(df):
-    elo = defaultdict(lambda: DEFAULT_ELO, {k:float(v) for k,v in ELO_SEED.items()})
-    stats = defaultdict(lambda: {"scored":[],"conceded":[],"results":[],"dates":[],"elo_history":[]})
-    h2h   = defaultdict(lambda: {"hw":0,"dr":0,"aw":0,"n":0})
+df_all, form = load_all()
 
-    for _,row in df.iterrows():
-        home,away = str(row["home_team"]).strip(), str(row["away_team"]).strip()
-        hg,ag = int(row["home_goals"]), int(row["away_goals"])
-        date  = row["date"]
-        sc    = 1.0 if hg>ag else (0.5 if hg==ag else 0.0)
-        res_h = "W" if hg>ag else ("D" if hg==ag else "L")
-        res_a = "L" if hg>ag else ("D" if hg==ag else "W")
+def get_team_history(team, n=8):
+    """Last N WC matches for a team."""
+    mask = (df_all["home_team"].str.contains(team, case=False, na=False) |
+            df_all["away_team"].str.contains(team, case=False, na=False))
+    matches = df_all[mask].tail(n).copy()
+    rows = []
+    for _, r in matches.iterrows():
+        is_home = team.lower() in str(r["home_team"]).lower()
+        scored   = r["home_goals"] if is_home else r["away_goals"]
+        conceded = r["away_goals"] if is_home else r["home_goals"]
+        opponent = r["away_team"] if is_home else r["home_team"]
+        result   = "W" if scored>conceded else ("D" if scored==conceded else "L")
+        rows.append({
+            "Date":     r["date"].strftime("%d/%m/%Y"),
+            "Opponent": opponent.strip(),
+            "Score":    f"{scored}–{conceded}",
+            "Result":   result,
+            "Season":   int(r["season"]),
+        })
+    return list(reversed(rows))
 
-        stats[home]["elo_history"].append(elo[home])
-        stats[away]["elo_history"].append(elo[away])
-
-        elo[home],elo[away] = update_elo(elo[home],elo[away],sc)
-
-        stats[home]["scored"].append(hg); stats[home]["conceded"].append(ag)
-        stats[home]["results"].append(res_h); stats[home]["dates"].append(date)
-        stats[away]["scored"].append(ag); stats[away]["conceded"].append(hg)
-        stats[away]["results"].append(res_a); stats[away]["dates"].append(date)
-
-        key = tuple(sorted([home,away]))
-        h2h[key]["n"]+=1
-        if hg>ag: h2h[key]["hw"]+=1
-        elif hg==ag: h2h[key]["dr"]+=1
-        else: h2h[key]["aw"]+=1
-
-    return dict(stats), dict(elo), dict(h2h)
-
-@st.cache_data
-def get_all_teams(df):
-    t = set(df["home_team"].dropna().str.strip()) | set(df["away_team"].dropna().str.strip())
-    return sorted(t)
-
-def team_summary(stats, elo, team, w=5):
-    ts = stats.get(team, {"scored":[],"conceded":[],"results":[],"dates":[],"elo_history":[]})
-    n  = len(ts["scored"])
-    if n == 0:
-        return None
-    def roll(lst): return float(np.mean(lst[-w:])) if lst else LEAGUE_AVG
-    def winrate(r): recent=r[-w:]; return sum(1 for x in recent if x=="W")/len(recent) if recent else 0.33
-    def pts(r):
-        recent=r[-w:]; mp={"W":3,"D":1,"L":0}
-        return float(np.mean([mp[x] for x in recent])) if recent else 1.0
-    return {
-        "elo":         float(elo.get(team, DEFAULT_ELO)),
-        "n":           n,
-        "ovr_sc":      float(np.mean(ts["scored"])),
-        "ovr_cc":      float(np.mean(ts["conceded"])),
-        "form_sc":     roll(ts["scored"]),
-        "form_cc":     roll(ts["conceded"]),
-        "win_rate":    winrate(ts["results"]),
-        "pts":         pts(ts["results"]),
-        "gd":          float(np.mean([s-c for s,c in zip(ts["scored"][-w:],ts["conceded"][-w:])])) if n else 0,
-        "results":     ts["results"],
-        "dates":       ts["dates"],
-        "scored_hist": ts["scored"],
-        "conc_hist":   ts["conceded"],
-        "elo_history": ts["elo_history"],
-    }
-
-# ─── LOAD ─────────────────────────────────────────────────────────────────────
-
-df_all  = load_data()
-stats, elo_final, h2h_all = build_team_histories(df_all)
-all_teams = get_all_teams(df_all)
-
-# Try load XGB report
-xgb_report = None
-if (DATA_DIR/"xgb_model_report.json").exists():
-    with open(DATA_DIR/"xgb_model_report.json") as f:
-        xgb_report = json.load(f)
-
-# ─── SIDEBAR ──────────────────────────────────────────────────────────────────
-
+# ── SIDEBAR ───────────────────────────────────────────────────────────────────
 with st.sidebar:
-    st.markdown("## ⚽ WC 2026 Predictor")
+    st.markdown("## 🏆 WC 2026 Predictor")
     st.markdown("---")
+    st.markdown("### Sélectionner le match")
+    match_label = st.selectbox("", list(MATCHES.keys()), label_visibility="collapsed")
 
-    st.markdown("### Match")
-    st.markdown(
-        f'{flag_img("Croatia", 22)} **Croatia** &nbsp; vs &nbsp; {flag_img("Ghana", 22)} **Ghana**',
-        unsafe_allow_html=True
-    )
-    st.caption("🌍 Neutral venue · WC 2026 · Group L")
+team_a, team_b, match_date = MATCHES[match_label]
 
-    st.markdown("---")
-    st.markdown("### Tune xG")
-    xg_h_override = st.slider("xG Croatia", 0.1, 4.0, 1.9, 0.05)
-    xg_a_override = st.slider("xG Ghana",   0.1, 4.0, 0.85, 0.05)
+# ── COMPUTE ───────────────────────────────────────────────────────────────────
+a_stats = form.get(team_a)
+b_stats = form.get(team_b)
 
-    st.markdown("---")
-    st.markdown("### Blend weights")
-    blend_pct = st.slider("Poisson weight %", 0, 100, 40, 5)
-    blend = blend_pct / 100
-
-    st.markdown("---")
-    run_mc = st.checkbox("Run Monte Carlo (50k sims)", value=True)
-    st.markdown("---")
-    st.caption("Data: OpenFootball · WC 2014–2026")
-
-# ─── COMPUTE ──────────────────────────────────────────────────────────────────
-
-home_team = "Croatia"
-away_team = "Ghana"
-home_s = team_summary(stats, elo_final, home_team)
-away_s = team_summary(stats, elo_final, away_team)
-
-if home_s is None or away_s is None:
-    st.error("Not enough data for one of the selected teams.")
+if not a_stats or not b_stats:
+    st.error(f"Données manquantes pour {team_a} ou {team_b}")
     st.stop()
 
-xg_h, xg_a = xg_h_override, xg_a_override
-mat = score_matrix(xg_h, xg_a)
-p_hw_p, p_d_p, p_aw_p = outcome_probs(mat)
+xg_a, xg_b   = compute_xg(a_stats, b_stats)
+mat           = score_matrix(xg_a, xg_b)
+p_win, p_draw, p_lose = outcome_probs(mat)
 sorted_scores = sorted(mat.items(), key=lambda x: x[1], reverse=True)
-best = sorted_scores[0][0]
+best          = sorted_scores[0][0]
+pen_a, pen_b  = simulate_penalties()
 
-# XGB probs from report (if available and same match)
-p_hw_x = p_d_x = p_aw_x = None
-if xgb_report:
-    pred = xgb_report["prediction"]
-    p_hw_x = pred["xgboost"]["croatia_win"] / 100
-    p_d_x  = pred["xgboost"]["draw"] / 100
-    p_aw_x = pred["xgboost"]["ghana_win"] / 100
+winner     = team_a if p_win >= p_lose else team_b
+winner_pct = p_win if p_win >= p_lose else p_lose
+is_close   = abs(p_win - p_lose) < 0.08
 
-# Ensemble
-if p_hw_x is not None:
-    p_hw_e = blend*p_hw_p + (1-blend)*p_hw_x
-    p_d_e  = blend*p_d_p  + (1-blend)*p_d_x
-    p_aw_e = blend*p_aw_p + (1-blend)*p_aw_x
-else:
-    p_hw_e, p_d_e, p_aw_e = p_hw_p, p_d_p, p_aw_p
+# ── HEADER ────────────────────────────────────────────────────────────────────
+fa = FLAG_IMGS.get(team_a,""); fb = FLAG_IMGS.get(team_b,"")
+st.markdown(f"""
+<div style="display:flex;align-items:center;gap:18px;margin-bottom:0.25rem">
+    <img src="{fa}" width="56" style="border-radius:5px;box-shadow:0 2px 10px #0005">
+    <h1 style="margin:0;font-size:2rem;font-weight:900">{team_a} <span style="color:#444;font-weight:300">vs</span> {team_b}</h1>
+    <img src="{fb}" width="56" style="border-radius:5px;box-shadow:0 2px 10px #0005">
+</div>
+<p style="color:#666;margin:0 0 1.5rem">⚽ FIFA World Cup 2026 · Terrain neutre · {match_date}</p>
+""", unsafe_allow_html=True)
 
-# Monte Carlo
-if run_mc:
-    mc_hw, mc_d, mc_aw, mc_scores = monte_carlo(xg_h, xg_a)
+# ── MAIN CARDS ────────────────────────────────────────────────────────────────
+col1, col2, col3 = st.columns([1.2, 1, 1])
 
-# H2H
-h2h_key = tuple(sorted([home_team, away_team]))
-h2h_entry = h2h_all.get(h2h_key, {"hw":0,"dr":0,"aw":0,"n":0})
+with col1:
+    if is_close:
+        verdict_html = f"""
+        <div class="winner-card" style="background:linear-gradient(135deg,#1a1a0d,#33300a);border-color:#f9a825">
+            <div class="winner-label" style="color:#ffe082">⚖️ Match très serré</div>
+            <div class="winner-name" style="font-size:1.8rem">Trop proche<br>pour trancher</div>
+            <div class="winner-conf" style="color:#ffe082">{team_a} {p_win*100:.0f}% · {team_b} {p_lose*100:.0f}%</div>
+        </div>"""
+    else:
+        fw = FLAG_IMGS.get(winner,"")
+        verdict_html = f"""
+        <div class="winner-card">
+            <div class="winner-label">🏆 Vainqueur prédit</div>
+            <div style="display:flex;align-items:center;justify-content:center;gap:12px;margin:10px 0">
+                <img src="{fw}" width="44" style="border-radius:4px">
+                <div class="winner-name">{winner}</div>
+            </div>
+            <div class="winner-conf">Confiance : {winner_pct*100:.0f}%</div>
+        </div>"""
+    st.markdown(verdict_html, unsafe_allow_html=True)
 
-# ─── HEADER ───────────────────────────────────────────────────────────────────
-
-st.markdown(
-    f'<h1 style="display:flex;align-items:center;gap:14px;margin-bottom:4px;">'
-    f'{flag_img(home_team, 40)} {home_team} '
-    f'<span style="color:#555;font-weight:400;">vs</span> '
-    f'{flag_img(away_team, 40)} {away_team}'
-    f'</h1>',
-    unsafe_allow_html=True
-)
-st.markdown(f"**FIFA World Cup 2026** · Poisson + XGBoost Ensemble")
-st.markdown("---")
-
-# ─── TOP KPIs ─────────────────────────────────────────────────────────────────
-
-c1,c2,c3,c4,c5 = st.columns(5)
-c1.metric("xG " + home_team, f"{xg_h:.2f}", delta=f"Elo {home_s['elo']:.0f}")
-c2.metric("xG " + away_team, f"{xg_a:.2f}", delta=f"Elo {away_s['elo']:.0f}")
-c3.metric(f"{home_team} win", f"{p_hw_e*100:.1f}%")
-c4.metric("Draw", f"{p_d_e*100:.1f}%")
-c5.metric(f"{away_team} win", f"{p_aw_e*100:.1f}%")
-
-st.markdown("---")
-
-# ─── PREDICTED SCORE + SCORELINES ─────────────────────────────────────────────
-
-col_score, col_scores = st.columns([1, 2])
-
-with col_score:
+with col2:
     st.markdown(f"""
-    <div class="score-box">
-        <div style="font-size:0.85rem;color:#90caf9;margin-bottom:12px">PREDICTED SCORE</div>
-        <div class="score-num">{best[0]} – {best[1]}</div>
-        <div class="score-label">{flag_img(home_team, 20)} {home_team} &nbsp;·&nbsp; {flag_img(away_team, 20)} {away_team}</div>
-        <div style="margin-top:12px;font-size:0.8rem;color:#64b5f6">
-            Probability: {mat[best]*100:.2f}%
+    <div class="score-card">
+        <div class="score-label">⚽ Score prédit</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;margin:6px 0">
+            <img src="{fa}" width="32" style="border-radius:3px">
+            <div class="score-num">{best[0]}–{best[1]}</div>
+            <img src="{fb}" width="32" style="border-radius:3px">
+        </div>
+        <div style="font-size:0.8rem;color:#64b5f6;margin-top:6px">
+            {team_a} {best[0]} · {team_b} {best[1]}<br>
+            <span style="color:#546e7a">Probabilité : {mat[best]*100:.1f}%</span>
         </div>
     </div>
     """, unsafe_allow_html=True)
 
-    st.markdown("")
-    st.markdown(f"**Model Ensemble** ({100-blend_pct}% XGB + {blend_pct}% Poisson)")
-
-with col_scores:
-    st.markdown("#### Top scorelines")
-    scores_data = []
-    for (i,j),p in sorted_scores[:8]:
-        res = "🟢 " + home_team if i>j else ("🟡 Draw" if i==j else "🔴 " + away_team)
-        scores_data.append({"Score": f"{i}–{j}", "Prob %": round(p*100,2), "Result": res})
-    df_sc = pd.DataFrame(scores_data)
-
-    def score_color(result):
-        if home_team in result: return "#1565c0"
-        if "Draw" in result: return "#616161"
-        return "#b71c1c"
-
-    fig_sc = go.Figure(go.Bar(
-        x=df_sc["Prob %"],
-        y=df_sc["Score"],
-        orientation="h",
-        marker_color=[score_color(r) for r in df_sc["Result"]],
-        text=[f"{p:.2f}%" for p in df_sc["Prob %"]],
-        textposition="outside",
-    ))
-    fig_sc.update_layout(
-        height=280, margin=dict(l=10,r=60,t=10,b=10),
-        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#ccc", size=12),
-        xaxis=dict(showgrid=False, zeroline=False, showticklabels=False),
-        yaxis=dict(autorange="reversed"),
-    )
-    st.plotly_chart(fig_sc, use_container_width=True)
+with col3:
+    fw_pen = team_a if pen_a >= pen_b else team_b
+    fp_pen = FLAG_IMGS.get(fw_pen,"")
+    st.markdown(f"""
+    <div class="pen-card">
+        <div class="pen-label">🥅 Si ça va aux pénalties</div>
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin:8px 0">
+            <img src="{fp_pen}" width="30" style="border-radius:3px">
+            <div class="pen-winner">{fw_pen}</div>
+        </div>
+        <div style="font-size:0.82rem;color:#aaa;margin-top:6px">
+            {team_a} {pen_a}% · {team_b} {pen_b}%
+        </div>
+    </div>
+    <div style="margin-top:10px;background:#1a1a2e;border-radius:12px;padding:14px">
+        <div style="font-size:0.75rem;color:#888;margin-bottom:8px;text-transform:uppercase">Probas 90min</div>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#ccc;margin-bottom:4px">
+            <span>{team_a}</span><span style="font-weight:700;color:#42a5f5">{p_win*100:.0f}%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#ccc;margin-bottom:4px">
+            <span>Draw</span><span style="font-weight:700;color:#9e9e9e">{p_draw*100:.0f}%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;font-size:0.85rem;color:#ccc">
+            <span>{team_b}</span><span style="font-weight:700;color:#ef5350">{p_lose*100:.0f}%</span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 st.markdown("---")
 
-# ─── HEATMAP + OUTCOME DONUT ──────────────────────────────────────────────────
+# ── HISTORIQUE ────────────────────────────────────────────────────────────────
+st.markdown("### 📋 Historique WC des équipes")
 
-col_hm, col_donut = st.columns(2)
+col_ha, col_hb = st.columns(2)
 
-with col_hm:
-    st.markdown("#### Score probability heatmap")
-    N = 6
-    z = [[mat.get((i,j),0)*100 for j in range(N)] for i in range(N)]
-    fig_hm = go.Figure(go.Heatmap(
-        z=z,
-        x=[f"GHA {j}" for j in range(N)],
-        y=[f"CRO {i}" for i in range(N)],
-        colorscale="Blues",
-        text=[[f"{v:.1f}%" for v in row] for row in z],
-        texttemplate="%{text}",
-        showscale=False,
-    ))
-    fig_hm.update_layout(
-        height=300, margin=dict(l=10,r=10,t=10,b=10),
-        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#ccc", size=11),
-        yaxis=dict(autorange="reversed"),
-    )
-    st.plotly_chart(fig_hm, use_container_width=True)
-
-with col_donut:
-    st.markdown("#### Outcome probabilities")
-    labels = [f"{home_team} win", "Draw", f"{away_team} win"]
-    vals_p = [p_hw_p*100, p_d_p*100, p_aw_p*100]
-    vals_e = [p_hw_e*100, p_d_e*100, p_aw_e*100]
-
-    fig_do = go.Figure()
-    fig_do.add_trace(go.Bar(name="Poisson", x=labels, y=vals_p,
-                             marker_color=["#1565c0","#616161","#b71c1c"],
-                             opacity=0.5))
-    if p_hw_x:
-        vals_x = [p_hw_x*100, p_d_x*100, p_aw_x*100]
-        fig_do.add_trace(go.Bar(name="XGBoost", x=labels, y=vals_x,
-                                 marker_color=["#42a5f5","#9e9e9e","#ef5350"],
-                                 opacity=0.7))
-    fig_do.add_trace(go.Bar(name="Ensemble", x=labels, y=vals_e,
-                             marker_color=["#1e88e5","#757575","#e53935"]))
-    fig_do.update_layout(
-        barmode="group", height=300,
-        margin=dict(l=10,r=10,t=10,b=10),
-        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#ccc", size=12),
-        legend=dict(bgcolor="rgba(0,0,0,0)"),
-        yaxis=dict(title="%", gridcolor="#333"),
-        xaxis=dict(gridcolor="#333"),
-    )
-    st.plotly_chart(fig_do, use_container_width=True)
-
-st.markdown("---")
-
-# ─── TEAM STATS ───────────────────────────────────────────────────────────────
-
-st.markdown("#### Team stats (WC history)")
-col_h, col_a = st.columns(2)
-
-def render_team_card(col, team, s):
+def render_history(col, team):
+    history = get_team_history(team, n=7)
+    flag_url = FLAG_IMGS.get(team, "")
     with col:
-        st.markdown(f'{flag_img(team, 24)} **{team}**', unsafe_allow_html=True)
-        r1,r2,r3 = st.columns(3)
-        r1.metric("Elo", f"{s['elo']:.0f}")
-        r2.metric("WC Matches", s["n"])
-        r3.metric("Win rate (L5)", f"{s['win_rate']*100:.0f}%")
-        r4,r5,r6 = st.columns(3)
-        r4.metric("Avg scored", f"{s['ovr_sc']:.2f}")
-        r5.metric("Avg conceded", f"{s['ovr_cc']:.2f}")
-        r6.metric("Goal diff (L5)", f"{s['gd']:+.2f}")
+        st.markdown(f"""
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+            <img src="{flag_url}" width="28" style="border-radius:3px">
+            <span style="font-weight:700;font-size:1.05rem">{team}</span>
+        </div>
+        """, unsafe_allow_html=True)
+        if not history:
+            st.caption("Pas d'historique disponible")
+            return
+        for m in history:
+            res_class = f"res-{m['Result']}"
+            st.markdown(f"""
+            <div class="match-row">
+                <span class="{res_class}">{m['Result']}</span>
+                <span style="color:#aaa;min-width:70px">{m['Date']}</span>
+                <span style="color:#666">WC {m['Season']}</span>
+                <span style="color:#fff;flex:1">vs {m['Opponent']}</span>
+                <span style="font-weight:700;color:#e0e0e0">{m['Score']}</span>
+            </div>
+            """, unsafe_allow_html=True)
 
-        # Form string
-        form_str = " ".join(
-            f"{'🟢' if r=='W' else '🟡' if r=='D' else '🔴'}"
-            for r in s["results"][-5:]
-        )
-        st.markdown(f"Last 5: {form_str}")
-
-        # Elo history chart
-        if s["elo_history"]:
-            fig_elo = go.Figure(go.Scatter(
-                y=s["elo_history"], mode="lines+markers",
-                line=dict(color="#42a5f5", width=2),
-                marker=dict(size=5),
-            ))
-            fig_elo.update_layout(
-                height=120, margin=dict(l=0,r=0,t=0,b=0),
-                paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-                showlegend=False,
-                xaxis=dict(showgrid=False,showticklabels=False,zeroline=False),
-                yaxis=dict(showgrid=False,showticklabels=False,zeroline=False),
-            )
-            st.plotly_chart(fig_elo, use_container_width=True)
-
-render_team_card(col_h, home_team, home_s)
-render_team_card(col_a, away_team, away_s)
-
-# ─── H2H ──────────────────────────────────────────────────────────────────────
-
-if h2h_entry["n"] > 0:
-    st.markdown("---")
-    st.markdown("#### Head to Head")
-    h1,h2_,h3 = st.columns(3)
-    h1.metric(f"{home_team} wins", h2h_entry["hw"])
-    h2_.metric("Draws", h2h_entry["dr"])
-    h3.metric(f"{away_team} wins", h2h_entry["aw"])
-
-# ─── MONTE CARLO ──────────────────────────────────────────────────────────────
-
-if run_mc:
-    st.markdown("---")
-    st.markdown("#### Monte Carlo validation (50,000 simulations)")
-    mc1,mc2,mc3 = st.columns(3)
-    mc1.metric(f"{home_team} win", f"{mc_hw*100:.1f}%", delta=f"Poisson: {p_hw_p*100:.1f}%")
-    mc2.metric("Draw",             f"{mc_d*100:.1f}%",  delta=f"Poisson: {p_d_p*100:.1f}%")
-    mc3.metric(f"{away_team} win", f"{mc_aw*100:.1f}%", delta=f"Poisson: {p_aw_p*100:.1f}%")
-
-    top_mc = sorted(mc_scores.items(), key=lambda x: x[1], reverse=True)[:6]
-    mc_df  = pd.DataFrame([{"Score": f"{i}–{j}", "Simulations": c,
-                             "Freq %": round(c/50000*100,2)} for (i,j),c in top_mc])
-    st.dataframe(mc_df, use_container_width=True, hide_index=True)
-
-# ─── MODEL REPORT ─────────────────────────────────────────────────────────────
-
-if xgb_report:
-    st.markdown("---")
-    st.markdown("#### XGBoost model performance")
-    cv = xgb_report["cv_metrics"]
-    m1,m2,m3,m4 = st.columns(4)
-    m1.metric("CV Log-Loss", cv["log_loss_mean"], delta=f"±{cv['log_loss_std']}")
-    m2.metric("CV Accuracy", f"{cv['accuracy_mean']}%", delta=f"±{cv['accuracy_std']}%")
-    m3.metric("Training matches", xgb_report["n_training_matches"])
-    m4.metric("Features", len(xgb_report["features"]))
-
-    # Feature importance chart
-    fi = xgb_report["feature_importance"]
-    fi_df = pd.DataFrame(list(fi.items()), columns=["Feature","Importance"]).sort_values("Importance",ascending=True).tail(12)
-    fig_fi = go.Figure(go.Bar(
-        x=fi_df["Importance"], y=fi_df["Feature"], orientation="h",
-        marker_color="#42a5f5",
-        text=[f"{v:.3f}" for v in fi_df["Importance"]], textposition="outside"
-    ))
-    fig_fi.update_layout(
-        height=320, margin=dict(l=10,r=60,t=10,b=10),
-        paper_bgcolor="rgba(0,0,0,0)", plot_bgcolor="rgba(0,0,0,0)",
-        font=dict(color="#ccc",size=11),
-        xaxis=dict(showgrid=False,showticklabels=False),
-    )
-    st.plotly_chart(fig_fi, use_container_width=True)
+render_history(col_ha, team_a)
+render_history(col_hb, team_b)
 
 st.markdown("---")
-st.caption("Built with ⚽ · OpenFootball data · Poisson + XGBoost + Monte Carlo · WC 2026")
+st.caption("🌍 Data: OpenFootball · WC 2014–2026 · Modèle: Poisson + Monte Carlo")

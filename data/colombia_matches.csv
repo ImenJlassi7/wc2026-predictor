@@ -1,0 +1,9 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2014-06-14,2014,World Cup,Colombia,,1,3,0,W,3,,,,0.0
+2014-06-24,2014,World Cup,Colombia,,1,1,4,L,0,3.0,0.0,3.0,0.5
+2018-06-19,2018,World Cup,Colombia,Japan,1,1,2,L,0,2.0,2.0,1.5,0.33
+2018-06-24,2018,World Cup,Colombia,Poland,0,3,0,W,3,1.67,2.0,1.0,0.25
+2018-06-28,2018,World Cup,Colombia,Senegal,0,1,0,W,3,2.0,1.5,1.5,0.4
+2026-06-27,2026,World Cup,Colombia,Uzbekistan,0,3,1,W,3,1.8,1.2,1.8,0.6
+2026-06-27,2026,World Cup,Colombia,DR Congo,1,1,0,W,3,1.8,1.4,1.8,0.6
+2026-06-27,2026,World Cup,Colombia,Portugal,1,0,0,D,1,1.8,0.6,2.4,0.8

@@ -188,11 +188,17 @@ date,season,competition,home_team,away_team,home_goals,away_goals
 2026-06-27,2026,World Cup,Austria,Jordan,3,1
 2026-06-27,2026,World Cup,Argentina,Austria,2,0
 2026-06-27,2026,World Cup,Jordan,Algeria,1,2
+2026-06-27,2026,World Cup,Algeria,Austria,3,3
+2026-06-27,2026,World Cup,Jordan,Argentina,1,3
 2026-06-27,2026,World Cup,Portugal,DR Congo,1,1
 2026-06-27,2026,World Cup,Uzbekistan,Colombia,1,3
 2026-06-27,2026,World Cup,Portugal,Uzbekistan,5,0
 2026-06-27,2026,World Cup,Colombia,DR Congo,1,0
+2026-06-27,2026,World Cup,Colombia,Portugal,0,0
+2026-06-27,2026,World Cup,DR Congo,Uzbekistan,3,1
 2026-06-27,2026,World Cup,England,Croatia,4,2
 2026-06-27,2026,World Cup,Ghana,Panama,1,0
 2026-06-27,2026,World Cup,England,Ghana,0,0
 2026-06-27,2026,World Cup,Panama,Croatia,0,1
+2026-06-27,2026,World Cup,Panama,England,0,2
+2026-06-27,2026,World Cup,Croatia,Ghana,2,1

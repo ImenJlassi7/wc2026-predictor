@@ -1,0 +1,10 @@
+date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result,points,avg_scored_last5,avg_conceded_last5,avg_pts_last5,win_rate_last5
+2018-06-15,2018,World Cup,Morocco,Iran,1,0,1,L,0,,,,0.0
+2018-06-20,2018,World Cup,Morocco,Portugal,0,0,1,L,0,0.0,1.0,0.0,0.0
+2018-06-25,2018,World Cup,Morocco,Spain,0,2,2,D,1,0.0,1.0,0.0,0.0
+2022-11-23,2022,World Cup,Morocco,Croatia,1,0,0,D,1,0.67,1.33,0.33,0.0
+2022-11-27,2022,World Cup,Morocco,Belgium,0,2,0,W,3,0.5,1.0,0.5,0.0
+2022-12-01,2022,World Cup,Morocco,Canada,0,2,1,W,3,0.8,0.8,1.0,0.2
+2026-06-27,2026,World Cup,Morocco,Brazil,0,1,1,D,1,1.2,0.8,1.6,0.4
+2026-06-27,2026,World Cup,Morocco,Scotland,0,1,0,W,3,1.4,0.8,1.8,0.4
+2026-06-27,2026,World Cup,Morocco,Haiti,1,4,2,W,3,1.2,0.4,2.2,0.6

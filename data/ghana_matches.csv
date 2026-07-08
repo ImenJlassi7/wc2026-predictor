@@ -7,3 +7,4 @@ date,season,competition,team,opponent,is_home,goals_scored,goals_conceded,result
 2022-12-02,2022,World Cup,Ghana,Uruguay,1,0,2,L,0,1.8,2.2,0.8,0.2
 2026-06-27,2026,World Cup,Ghana,Panama,1,1,0,W,3,1.6,2.2,0.8,0.2
 2026-06-27,2026,World Cup,Ghana,England,0,0,0,D,1,1.4,1.8,1.2,0.4
+2026-06-27,2026,World Cup,Ghana,Croatia,0,1,2,L,0,1.2,1.4,1.4,0.4
