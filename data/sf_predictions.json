@@ -1,0 +1,124 @@
+[
+  {
+    "match": "England vs Argentina",
+    "label": "Demi-Finale 1",
+    "team_a": "England",
+    "team_b": "Argentina",
+    "lambda3": 0.0,
+    "xg": {
+      "England": 1.772,
+      "Argentina": 1.473
+    },
+    "standard_poisson": {
+      "England_win": 44.6,
+      "draw": 23.0,
+      "Argentina_win": 32.1,
+      "predicted_score": "1-1"
+    },
+    "bivariate_poisson": {
+      "England_win": 44.7,
+      "draw": 23.1,
+      "Argentina_win": 32.2,
+      "predicted_score": "1-1"
+    },
+    "predicted_winner": "England",
+    "winner_confidence_pct": 44.7,
+    "penalties": {
+      "England": 35.6,
+      "Argentina": 64.4
+    },
+    "top_scorelines": [
+      {
+        "score": "1-1",
+        "prob_pct": 10.2,
+        "result": "Draw"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 9.04,
+        "result": "England W"
+      },
+      {
+        "score": "1-2",
+        "prob_pct": 7.51,
+        "result": "Argentina W"
+      },
+      {
+        "score": "1-0",
+        "prob_pct": 6.93,
+        "result": "England W"
+      },
+      {
+        "score": "2-2",
+        "prob_pct": 6.66,
+        "result": "Draw"
+      },
+      {
+        "score": "2-0",
+        "prob_pct": 6.14,
+        "result": "England W"
+      }
+    ]
+  },
+  {
+    "match": "France vs Spain",
+    "label": "Demi-Finale 2",
+    "team_a": "France",
+    "team_b": "Spain",
+    "lambda3": 0.0,
+    "xg": {
+      "France": 2.626,
+      "Spain": 1.361
+    },
+    "standard_poisson": {
+      "France_win": 62.7,
+      "draw": 17.4,
+      "Spain_win": 18.0,
+      "predicted_score": "2-1"
+    },
+    "bivariate_poisson": {
+      "France_win": 63.9,
+      "draw": 17.7,
+      "Spain_win": 18.4,
+      "predicted_score": "2-1"
+    },
+    "predicted_winner": "France",
+    "winner_confidence_pct": 63.9,
+    "penalties": {
+      "France": 53.9,
+      "Spain": 46.1
+    },
+    "top_scorelines": [
+      {
+        "score": "2-1",
+        "prob_pct": 8.87,
+        "result": "France W"
+      },
+      {
+        "score": "3-1",
+        "prob_pct": 7.77,
+        "result": "France W"
+      },
+      {
+        "score": "1-1",
+        "prob_pct": 6.76,
+        "result": "Draw"
+      },
+      {
+        "score": "2-0",
+        "prob_pct": 6.52,
+        "result": "France W"
+      },
+      {
+        "score": "2-2",
+        "prob_pct": 6.04,
+        "result": "Draw"
+      },
+      {
+        "score": "3-0",
+        "prob_pct": 5.71,
+        "result": "France W"
+      }
+    ]
+  }
+]

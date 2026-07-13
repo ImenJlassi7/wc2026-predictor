@@ -254,9 +254,10 @@ FEATURE_COLS = [
     "avg_scored_h5", "avg_conced_h5", "avg_scored_a5", "avg_conced_a5",
     "win_rate_h", "win_rate_a", "pts_h", "pts_a",
     "gd_h", "gd_a", "gd_diff",
-    "h2h_home_wr", "h2h_matches",
     "exp_h", "exp_a",
 ]
+# h2h_home_wr / h2h_matches retirées : importance mesurée à 0.0 (data/xgb_model_report.json),
+# elles n'ajoutaient que du bruit sur un dataset de 101 lignes.
 
 X = df_feat[FEATURE_COLS].values
 y = df_feat["outcome"].values
@@ -265,15 +266,15 @@ y = df_feat["outcome"].values
 xgb_model = xgb.XGBClassifier(
     objective       = "multi:softprob",
     num_class       = 3,
-    n_estimators    = 200,
-    max_depth       = 4,
+    n_estimators    = 60,
+    max_depth       = 2,
     learning_rate   = 0.05,
     subsample       = 0.8,
     colsample_bytree= 0.8,
-    min_child_weight= 3,
+    min_child_weight= 5,
     gamma           = 0.1,
-    reg_alpha       = 0.1,
-    reg_lambda      = 1.0,
+    reg_alpha       = 0.3,
+    reg_lambda      = 2.0,
     use_label_encoder=False,
     eval_metric     = "mlogloss",
     random_state    = 42,
@@ -291,9 +292,9 @@ cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
 
 # Log-loss via CV
 xgb_raw = xgb.XGBClassifier(
-    objective="multi:softprob", num_class=3, n_estimators=200,
-    max_depth=4, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8,
-    min_child_weight=3, gamma=0.1, reg_alpha=0.1, reg_lambda=1.0,
+    objective="multi:softprob", num_class=3, n_estimators=60,
+    max_depth=2, learning_rate=0.05, subsample=0.8, colsample_bytree=0.8,
+    min_child_weight=5, gamma=0.1, reg_alpha=0.3, reg_lambda=2.0,
     use_label_encoder=False, eval_metric="mlogloss", random_state=42, verbosity=0
 )
 cv_logloss = -cross_val_score(xgb_raw, X, y, cv=cv, scoring="neg_log_loss")
@@ -396,7 +397,6 @@ feat_vec = np.array([[
     cro_s["win_rate"], gha_s["win_rate"],
     cro_s["pts"], gha_s["pts"],
     cro_s["gd"], gha_s["gd"], cro_s["gd"] - gha_s["gd"],
-    h2h_home_wr, h2h_total,
     cro_s["n_matches"], gha_s["n_matches"],
 ]])
 
@@ -406,7 +406,7 @@ p_draw_xgb    = float(xgb_proba[1])
 p_gha_win_xgb = float(xgb_proba[2])
 
 # Ensemble: blend Poisson + XGBoost
-BLEND = 0.40  # 40% Poisson, 60% XGBoost
+BLEND = 0.70  # 70% Poisson, 30% XGBoost — Poisson généralise mieux en CV (log-loss 1.286 vs 1.345)
 p_cro_final = BLEND * p_hw    + (1 - BLEND) * p_cro_win_xgb
 p_draw_final= BLEND * p_d     + (1 - BLEND) * p_draw_xgb
 p_gha_final = BLEND * p_aw    + (1 - BLEND) * p_gha_win_xgb

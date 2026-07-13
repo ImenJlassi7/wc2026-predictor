@@ -78,18 +78,41 @@ FLAG_IMGS = {
     "USA":         "https://flagcdn.com/w40/us.png",
     "Egypt":       "https://flagcdn.com/w40/eg.png",
     "Colombia":    "https://flagcdn.com/w40/co.png",
+    "Spain":       "https://flagcdn.com/w40/es.png",
+    "England":     "https://flagcdn.com/w40/gb-eng.png",
 }
 
 MATCHES = {
+    "🏆 SF1 — Angleterre vs Argentine": ("England",   "Argentina", "Demi-Finale 1"),
+    "🏆 SF2 — France vs Espagne":       ("France",    "Spain",     "Demi-Finale 2"),
     "🏆 QF1 — France vs Maroc":           ("France",       "Morocco",     "Demain 21h00"),
     "🏆 QF2 — Espagne vs Belgique":        ("Spain",        "Belgium",     "Ven. 10/07 20h00"),
     "🏆 QF3 — Norvège vs Angleterre":      ("Norway",       "England",     "Sam. 11/07 22h00"),
     "🏆 QF4 — Argentine vs Suisse":        ("Argentina",    "Switzerland", "Dim. 12/07 02h00"),
-  }
+  
+}
 
 # ── CORE MATH ─────────────────────────────────────────────────────────────────
 def poisson_prob(lam, k):
     return math.exp(-lam) * (lam**k) / math.factorial(k)
+
+# ─── PENALTIES ────────────────────────────────────────────────────────────────
+# Taux historiques réels par équipe (même source que SF_bivariate_predictor.py)
+PENALTY_RATES = {
+    "England":   0.720, "Argentina": 0.800, "France":    0.780, "Spain":     0.760,
+    "Croatia":   0.790, "Ghana":     0.720, "Brazil":    0.750, "Portugal":  0.800,
+    "Germany":   0.830, "Netherlands": 0.740, "Morocco":  0.780, "Switzerland": 0.760,
+    "USA":       0.730, "Colombia":  0.770,
+}
+DEFAULT_RATE = 0.750
+
+def get_penalty_rate(team: str) -> float:
+    if team in PENALTY_RATES:
+        return PENALTY_RATES[team]
+    for key in PENALTY_RATES:
+        if key.lower() in team.lower() or team.lower() in key.lower():
+            return PENALTY_RATES[key]
+    return DEFAULT_RATE
 
 def compute_xg(a, b):
     xg_a = (a["overall_avg_scored"]/LEAGUE_AVG) * (b["overall_avg_conceded"]/LEAGUE_AVG) * LEAGUE_AVG
@@ -107,17 +130,43 @@ def outcome_probs(mat):
             sum(p for (i,j),p in mat.items() if i==j),
             sum(p for (i,j),p in mat.items() if i<j))
 
-def simulate_penalties(n=50_000):
+def simulate_penalties(team_a, team_b, n=50_000):
+    rate_a = get_penalty_rate(team_a)
+    rate_b = get_penalty_rate(team_b)
     random.seed(99)
     a_wins = 0
     for _ in range(n):
-        def shoot(): return sum(1 for _ in range(5) if random.random()<0.75)
-        ga,gb = shoot(),shoot()
+        def shoot(rate): return sum(1 for _ in range(5) if random.random()<rate)
+        ga,gb = shoot(rate_a),shoot(rate_b)
         while ga==gb:
-            ga += random.random()<0.75
-            gb += random.random()<0.75
+            ga += random.random()<rate_a
+            gb += random.random()<rate_b
         if ga>gb: a_wins+=1
     return round(a_wins/n*100,1), round((1-a_wins/n)*100,1)
+
+
+# ─── BIVARIATE POISSON ────────────────────────────────────────────────────────
+LAM3 = 0.10  # corrélation knockout estimée
+
+def bivariate_poisson_prob(lam1, lam2, lam3, x, y):
+    if lam3 < 1e-9:
+        return poisson_prob(lam1, x) * poisson_prob(lam2, y)
+    k_max = min(x, y)
+    total = 0.0
+    for k in range(k_max + 1):
+        try:
+            term = (math.comb(x,k)*math.comb(y,k)*math.factorial(k)*((lam3/(lam1*lam2))**k))
+            total += term
+        except: break
+    try:
+        log_c = (-(lam1+lam2+lam3)+x*math.log(lam1)-math.lgamma(x+1)+y*math.log(lam2)-math.lgamma(y+1))
+        return max(math.exp(log_c)*total, 0.0)
+    except: return 0.0
+
+def bivariate_matrix(lam1, lam2, lam3):
+    mat = {(i,j): bivariate_poisson_prob(lam1,lam2,lam3,i,j) for i in range(MAX_GOALS) for j in range(MAX_GOALS)}
+    total = sum(mat.values())
+    return {k: v/total for k,v in mat.items()} if total>0 else mat
 
 # ── LOAD DATA ─────────────────────────────────────────────────────────────────
 @st.cache_data
@@ -170,12 +219,16 @@ if not a_stats or not b_stats:
     st.error(f"Données manquantes pour {team_a} ou {team_b}")
     st.stop()
 
-xg_a, xg_b   = compute_xg(a_stats, b_stats)
-mat           = score_matrix(xg_a, xg_b)
+xg_a, xg_b = compute_xg(a_stats, b_stats)
+_is_sf = "SF" in match_label
+if _is_sf:
+    mat = bivariate_matrix(max(xg_a-LAM3,0.05), max(xg_b-LAM3,0.05), LAM3)
+else:
+    mat = score_matrix(xg_a, xg_b)
 p_win, p_draw, p_lose = outcome_probs(mat)
 sorted_scores = sorted(mat.items(), key=lambda x: x[1], reverse=True)
 best          = sorted_scores[0][0]
-pen_a, pen_b  = simulate_penalties()
+pen_a, pen_b  = simulate_penalties(team_a, team_b)
 
 winner     = team_a if p_win >= p_lose else team_b
 winner_pct = p_win if p_win >= p_lose else p_lose
@@ -259,6 +312,53 @@ with col3:
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+st.markdown("---")
+
+# ── SCORES LES PLUS PROBABLES ─────────────────────────────────────────────────
+st.markdown("###  Scores les plus probables")
+
+TOP_N = 6
+top_scores = sorted_scores[:TOP_N]
+
+def result_type(i, j):
+    if i > j:  return f"{team_a} W"
+    if i < j:  return f"{team_b} W"
+    return "Draw"
+
+TYPE_COLORS = {f"{team_a} W": "#42a5f5", "Draw": "#9e9e9e", f"{team_b} W": "#ef5350"}
+
+labels = [f"{i}–{j}" for (i, j), _ in top_scores]
+probs  = [round(p*100, 2) for _, p in top_scores]
+types  = [result_type(i, j) for (i, j), _ in top_scores]
+colors = [TYPE_COLORS[t] for t in types]
+
+fig = go.Figure(go.Bar(
+    x=probs[::-1],
+    y=labels[::-1],
+    orientation="h",
+    marker_color=colors[::-1],
+    text=[f"{p}%" for p in probs[::-1]],
+    textposition="outside",
+    hovertext=types[::-1],
+    hovertemplate="%{y} · %{hovertext}<br>%{x}%<extra></extra>",
+))
+fig.update_layout(
+    height=90 + TOP_N*40,
+    margin=dict(l=10, r=40, t=10, b=10),
+    plot_bgcolor="rgba(0,0,0,0)",
+    paper_bgcolor="rgba(0,0,0,0)",
+    font=dict(color="#e0e0e0", family="Inter"),
+    xaxis=dict(title="Probabilité (%)", gridcolor="#333", zeroline=False),
+    yaxis=dict(gridcolor="rgba(0,0,0,0)"),
+    showlegend=False,
+)
+st.plotly_chart(fig, use_container_width=True)
+
+legend_html = " &nbsp;&nbsp; ".join(
+    f'<span style="color:{c}">●</span> {t}' for t, c in TYPE_COLORS.items()
+)
+st.markdown(f"<div style='font-size:0.85rem;color:#aaa;margin-top:-10px'>{legend_html}</div>", unsafe_allow_html=True)
 
 st.markdown("---")
 

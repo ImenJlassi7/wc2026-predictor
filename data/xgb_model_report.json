@@ -1,6 +1,6 @@
 {
   "model": "XGBoost + Poisson Ensemble",
-  "n_training_matches": 95,
+  "n_training_matches": 101,
   "features": [
     "elo_diff",
     "elo_win_prob",
@@ -21,95 +21,91 @@
     "gd_h",
     "gd_a",
     "gd_diff",
-    "h2h_home_wr",
-    "h2h_matches",
     "exp_h",
     "exp_a"
   ],
   "cv_metrics": {
-    "log_loss_mean": 1.3934,
-    "log_loss_std": 0.1367,
-    "accuracy_mean": 43.2,
-    "accuracy_std": 10.7
+    "log_loss_mean": 1.088,
+    "log_loss_std": 0.0759,
+    "accuracy_mean": 41.7,
+    "accuracy_std": 5.6
   },
   "feature_importance": {
-    "elo_diff": 0.0691,
-    "p_home_win": 0.0682,
-    "elo_win_prob": 0.06,
-    "gd_h": 0.0516,
-    "exp_h": 0.0502,
-    "avg_scored_a5": 0.0501,
-    "win_rate_h": 0.0488,
-    "exp_a": 0.0467,
-    "gd_diff": 0.0458,
-    "avg_conced_a5": 0.045,
-    "xg_home": 0.0445,
-    "win_rate_a": 0.0439,
-    "gd_a": 0.0439,
-    "avg_scored_h5": 0.0434,
-    "xg_away": 0.0431,
-    "pts_h": 0.043,
-    "p_away_win": 0.0415,
-    "avg_conced_h5": 0.0412,
-    "p_draw": 0.0412,
-    "pts_a": 0.0407,
-    "xg_diff": 0.0382,
-    "h2h_home_wr": 0.0,
-    "h2h_matches": 0.0
+    "elo_win_prob": 0.0815,
+    "elo_diff": 0.0801,
+    "gd_h": 0.0622,
+    "win_rate_h": 0.059,
+    "p_home_win": 0.0568,
+    "gd_diff": 0.0552,
+    "avg_scored_a5": 0.0536,
+    "xg_diff": 0.0511,
+    "p_away_win": 0.0511,
+    "exp_h": 0.0454,
+    "pts_h": 0.045,
+    "p_draw": 0.0444,
+    "avg_scored_h5": 0.041,
+    "pts_a": 0.0376,
+    "avg_conced_a5": 0.0375,
+    "xg_home": 0.0369,
+    "exp_a": 0.0345,
+    "avg_conced_h5": 0.0343,
+    "win_rate_a": 0.0339,
+    "xg_away": 0.0297,
+    "gd_a": 0.0292
   },
   "prediction": {
     "match": "Croatia vs Ghana",
     "competition": "FIFA World Cup 2026",
-    "elo_croatia": 1876.0,
-    "elo_ghana": 1680.0,
-    "xg_croatia": 1.895,
-    "xg_ghana": 0.846,
+    "elo_croatia": 1884.0,
+    "elo_ghana": 1672.0,
+    "xg_croatia": 2.076,
+    "xg_ghana": 0.793,
     "poisson": {
-      "croatia_win": 60.8,
-      "draw": 21.8,
-      "ghana_win": 16.2
+      "croatia_win": 65.2,
+      "draw": 19.6,
+      "ghana_win": 13.2
     },
     "xgboost": {
-      "croatia_win": 44.9,
-      "draw": 29.2,
-      "ghana_win": 25.9
+      "croatia_win": 44.8,
+      "draw": 47.7,
+      "ghana_win": 7.6
     },
     "ensemble": {
-      "croatia_win": 51.3,
-      "draw": 26.2,
-      "ghana_win": 22.0
+      "croatia_win": 59.1,
+      "draw": 28.0,
+      "ghana_win": 11.5
     },
-    "predicted_score": "1-0",
+    "predicted_score": "2-0",
     "top_scorelines": [
       {
-        "score": "1-0",
+        "score": "2-0",
         "prob_pct": 12.23,
         "result": "Croatia W"
       },
       {
-        "score": "2-0",
-        "prob_pct": 11.58,
+        "score": "1-0",
+        "prob_pct": 11.78,
+        "result": "Croatia W"
+      },
+      {
+        "score": "2-1",
+        "prob_pct": 9.7,
         "result": "Croatia W"
       },
       {
         "score": "1-1",
-        "prob_pct": 10.34,
+        "prob_pct": 9.34,
         "result": "Draw"
-      },
-      {
-        "score": "2-1",
-        "prob_pct": 9.8,
-        "result": "Croatia W"
       },
       {
         "score": "3-0",
-        "prob_pct": 7.31,
+        "prob_pct": 8.47,
         "result": "Croatia W"
       },
       {
-        "score": "0-0",
-        "prob_pct": 6.45,
-        "result": "Draw"
+        "score": "3-1",
+        "prob_pct": 6.71,
+        "result": "Croatia W"
       }
     ]
   }
